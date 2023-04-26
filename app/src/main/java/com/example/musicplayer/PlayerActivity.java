@@ -69,9 +69,9 @@ public class PlayerActivity extends AppCompatActivity implements  ActionPlayingI
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setFulScreen();
+//        setFulScreen();
         setContentView(R.layout.activity_player);
-        getSupportActionBar().hide();
+//        getSupportActionBar().hide();
 
 //        getSupportActionBar().setTitle("Now Playing");
 //        getSupportActionBar().setDisplayHomeAsUpEnabled(true);

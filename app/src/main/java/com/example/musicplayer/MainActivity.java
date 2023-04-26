@@ -6,6 +6,8 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
+import androidx.core.view.GravityCompat;
+import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
@@ -23,12 +25,15 @@ import android.os.Bundle;
 import android.provider.MediaStore;
 import android.provider.Settings;
 import android.util.Log;
+import android.view.MenuItem;
 import android.widget.Toast;
 
 import com.example.musicplayer.fragment.AlbumFragment;
 import com.example.musicplayer.fragment.SongFragment;
 import com.example.musicplayer.model.MusicFile;
+import com.google.android.material.navigation.NavigationView;
 import com.google.android.material.tabs.TabLayout;
+import com.google.firebase.auth.FirebaseAuth;
 import com.karumi.dexter.Dexter;
 import com.karumi.dexter.MultiplePermissionsReport;
 import com.karumi.dexter.PermissionToken;
@@ -51,8 +56,32 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-        permission();
+        setContentView(R.layout.nav_actvity_main);
+        NavigationView navigationView = findViewById(R.id.nav_view);
+        navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                switch (item.getItemId())
+                {
+                    case R.id.nav_home:{
+                        Toast.makeText(MainActivity.this, "HOME", Toast.LENGTH_SHORT).show();
+                        break;
+                    }
+                    case  R.id.nav_logout:{
+                        FirebaseAuth.getInstance().signOut();
+                        Intent intent4 = new Intent(MainActivity.this , LoginActivity.class);
+                        startActivity(intent4);
+                        break;
+                    }
+
+                }
+                DrawerLayout drawerLayout = findViewById(R.id.drawer_layout);
+                drawerLayout.closeDrawer(GravityCompat.START);
+                return true;
+            }
+        });
+
+        runPermission();
 
     }
 
@@ -67,7 +96,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-    private void permission(){
+    private void runPermission(){
         if(ContextCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED){
             ActivityCompat.requestPermissions(MainActivity.this, new String[] {Manifest.permission.WRITE_EXTERNAL_STORAGE}, REQUEST_CODE);
         }else{
@@ -153,7 +182,6 @@ public class MainActivity extends AppCompatActivity {
                 long id = Long.parseLong(cursor.getString(5));
 
                 MusicFile musicFile = new MusicFile(path,title,artist,album,duration,id);
-                Log.e("----------------------------------------------------------------------------------------Path: " + path, "Album: " + album);
                 tempAudioList.add(musicFile);
 
                 if(!duplicate.contains(album)){
@@ -181,6 +209,8 @@ public class MainActivity extends AppCompatActivity {
 
         for (int i = 0; i < cursor.getCount(); i++) {
             cursor.moveToNext();
+            ArrayList<String> duplicate = new ArrayList<>();
+
             @SuppressLint("Range") int isMusic = cursor.getInt(cursor.getColumnIndex(MediaStore.Audio.Media.IS_MUSIC));
 
             if (isMusic != 0) {
@@ -195,6 +225,13 @@ public class MainActivity extends AppCompatActivity {
                 music.setDuration(cursor.getString(cursor.getColumnIndexOrThrow(MediaStore.Audio.Media.DURATION)));
                 music.setId(Long.parseLong(cursor.getString(cursor.getColumnIndexOrThrow(MediaStore.Audio.Media._ID))));
                 musicInfos.add(music);
+
+                String album = cursor.getString(cursor.getColumnIndexOrThrow(MediaStore.Audio.Media.ALBUM));
+
+                if(!duplicate.contains(album)){
+                    albums.add(music);
+                    duplicate.add(album);
+                }
             }
         }
         return musicInfos;
