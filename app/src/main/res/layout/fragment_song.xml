@@ -5,20 +5,22 @@
     android:background="#FFFFFF"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
-    <ImageView
-        android:src="@drawable/logo"
-        android:layout_gravity="center"
-        android:layout_width="100dp"
-        android:layout_height="100dp"/>
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
 
-    <androidx.appcompat.widget.SearchView
-        android:id="@+id/searchView"
-        app:searchIcon="@drawable/ic_search"
-        app:iconifiedByDefault="false"
-        app:queryHint="Explore all"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
-
+        <androidx.appcompat.widget.SearchView
+            android:id="@+id/searchView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_centerInParent="true"
+            android:layout_marginEnd="46dp"
+            android:gravity="center"
+            app:iconifiedByDefault="true"
+            app:queryHint="Explore all"
+            app:searchIcon="@drawable/ic_search" />
+    </RelativeLayout>
 
 <!--    <TextView-->
 <!--        android:text="Danh sach bai hat"-->

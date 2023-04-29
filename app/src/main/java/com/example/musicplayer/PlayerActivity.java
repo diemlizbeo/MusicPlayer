@@ -7,6 +7,7 @@ import static com.example.musicplayer.ApplicationClass.CHANNEL_ID_2;
 import static com.example.musicplayer.MainActivity.repeat;
 import static com.example.musicplayer.MainActivity.shuffle;
 import static com.example.musicplayer.adapter.AlbumDetailAdapter.listAlbum;
+import static com.example.musicplayer.adapter.ArtistDetailAdapter.listArtist;
 import static com.example.musicplayer.adapter.MusicAdapter.listFile;
 
 import androidx.annotation.NonNull;
@@ -55,7 +56,6 @@ public class PlayerActivity extends AppCompatActivity implements  ActionPlayingI
     private ImageView image;
 //    public static MediaPlayer mediaPlayer;
     private int position = -1;
-    private String sname;
 
     public static Uri uri;
     public static ArrayList<MusicFile> listSongs = new ArrayList<>();
@@ -382,6 +382,8 @@ public class PlayerActivity extends AppCompatActivity implements  ActionPlayingI
         String sender = getIntent().getStringExtra("sender");
         if(sender != null && sender.equals("albumDetails")){
             listSongs = listAlbum;
+        } else if (sender != null && sender.equals("artistDetails")){
+            listSongs = listArtist;
         }else{
             listSongs = listFile;
         }

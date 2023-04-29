@@ -4,6 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.SearchView;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.core.view.GravityCompat;
@@ -11,6 +12,8 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager.widget.ViewPager;
 
 import android.Manifest;
@@ -26,14 +29,21 @@ import android.provider.MediaStore;
 import android.provider.Settings;
 import android.util.Log;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
+import com.example.musicplayer.adapter.MusicAdapter;
 import com.example.musicplayer.fragment.AlbumFragment;
+import com.example.musicplayer.fragment.ArtistFragment;
 import com.example.musicplayer.fragment.SongFragment;
 import com.example.musicplayer.model.MusicFile;
 import com.google.android.material.navigation.NavigationView;
 import com.google.android.material.tabs.TabLayout;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.karumi.dexter.Dexter;
 import com.karumi.dexter.MultiplePermissionsReport;
 import com.karumi.dexter.PermissionToken;
@@ -47,8 +57,14 @@ import java.util.List;
 public class MainActivity extends AppCompatActivity {
     private ViewPager viewPager;
     private TabLayout tabLayout;
+    private SearchView searchView;
+    private ImageView imgAvt;
+    private TextView tvName,tvEmail;
     public static final int REQUEST_CODE = 1;
     public  static ArrayList<MusicFile> albums = new ArrayList<>();
+    public  static ArrayList<MusicFile> artists = new ArrayList<>();
+
+    private NavigationView navigationView;
 
     static boolean shuffle = false, repeat = false;
     public static ArrayList<MusicFile> musicFiles = new ArrayList<>();
@@ -57,7 +73,11 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.nav_actvity_main);
-        NavigationView navigationView = findViewById(R.id.nav_view);
+        navigationView = findViewById(R.id.nav_view);
+
+        imgAvt = navigationView.getHeaderView(0).findViewById(R.id.imgAvt);
+        tvName = navigationView.getHeaderView(0).findViewById(R.id.tvName);
+        tvEmail = navigationView.getHeaderView(0).findViewById(R.id.tvEmail);
         navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
@@ -67,19 +87,25 @@ public class MainActivity extends AppCompatActivity {
                         Toast.makeText(MainActivity.this, "HOME", Toast.LENGTH_SHORT).show();
                         break;
                     }
+                    case R.id.nav_account:{
+                        Intent intent = new Intent(MainActivity.this , ProfileActivity.class);
+                        startActivity(intent);
+                        break;
+                    }
                     case  R.id.nav_logout:{
                         FirebaseAuth.getInstance().signOut();
                         Intent intent4 = new Intent(MainActivity.this , LoginActivity.class);
                         startActivity(intent4);
                         break;
                     }
-
                 }
                 DrawerLayout drawerLayout = findViewById(R.id.drawer_layout);
                 drawerLayout.closeDrawer(GravityCompat.START);
                 return true;
             }
         });
+
+        showInforUser();
 
         runPermission();
 
@@ -88,11 +114,16 @@ public class MainActivity extends AppCompatActivity {
     private void initView() {
         viewPager = findViewById(R.id.viewPager);
         tabLayout = findViewById(R.id.tabLayout);
+        searchView = findViewById(R.id.searchView);
+
         ViewPagerAdapter viewPagerAdapter = new ViewPagerAdapter(getSupportFragmentManager());
         viewPagerAdapter.addFragments(new SongFragment(), "Song");
         viewPagerAdapter.addFragments(new AlbumFragment(), "Album");
+        viewPagerAdapter.addFragments(new ArtistFragment(), "Artist");
         viewPager.setAdapter(viewPagerAdapter);
         tabLayout.setupWithViewPager(viewPager);
+
+
     }
 
 
@@ -161,6 +192,7 @@ public class MainActivity extends AppCompatActivity {
     public  static  ArrayList<MusicFile> getAllAudio1 (Context context){
         ArrayList<MusicFile> tempAudioList = new ArrayList<>();
         ArrayList<String> duplicate = new ArrayList<>();
+        ArrayList<String> arti = new ArrayList<>();
 
         Uri uri = MediaStore.Audio.Media.EXTERNAL_CONTENT_URI;
         String[] projection = {
@@ -187,6 +219,10 @@ public class MainActivity extends AppCompatActivity {
                 if(!duplicate.contains(album)){
                     albums.add(musicFile);
                     duplicate.add(album);
+                }
+                if(!arti.contains(artist)){
+                    artists.add(musicFile);
+                    arti.add(artist);
                 }
 
 
@@ -235,5 +271,26 @@ public class MainActivity extends AppCompatActivity {
             }
         }
         return musicInfos;
+    }
+
+    @SuppressLint("ResourceType")
+    private void showInforUser(){
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        if (user != null) {
+            // Name, email address, and profile photo Url
+            String name = user.getDisplayName();
+            String email = user.getEmail();
+            Uri photoUrl = user.getPhotoUrl();
+
+            if(name == null){
+                tvName.setVisibility(View.GONE);
+            }else{
+                tvName.setVisibility(View.VISIBLE);
+                tvName.setText(name);
+
+            }
+           tvEmail.setText(email);
+            Glide.with(this).load(photoUrl).error(R.id.imgAvt).into(imgAvt);
+        }
     }
 }

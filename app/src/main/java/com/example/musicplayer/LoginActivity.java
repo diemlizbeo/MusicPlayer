@@ -36,8 +36,6 @@ public class LoginActivity extends AppCompatActivity {
     private final static int REQUEST_CODE_REGISTER = 10000;
     private FirebaseAuth mFirebaseAuth;
 
-
-
     @Override
     protected void onStart() {
         super.onStart();
