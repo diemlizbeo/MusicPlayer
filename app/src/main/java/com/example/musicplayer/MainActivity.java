@@ -12,14 +12,18 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager.widget.ViewPager;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
+import android.app.Dialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.media.MediaMetadataRetriever;
@@ -28,8 +32,10 @@ import android.os.Bundle;
 import android.provider.MediaStore;
 import android.provider.Settings;
 import android.util.Log;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -55,6 +61,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
+    public static boolean SHOW_MINI_PLAYER = false;
     private ViewPager viewPager;
     private TabLayout tabLayout;
     private SearchView searchView;
@@ -63,11 +70,22 @@ public class MainActivity extends AppCompatActivity {
     public static final int REQUEST_CODE = 1;
     public  static ArrayList<MusicFile> albums = new ArrayList<>();
     public  static ArrayList<MusicFile> artists = new ArrayList<>();
+    public static ArrayList<MusicFile> musicFiles = new ArrayList<>();
+
+    FrameLayout frame_player;
 
     private NavigationView navigationView;
 
     static boolean shuffle = false, repeat = false;
-    public static ArrayList<MusicFile> musicFiles = new ArrayList<>();
+    public static final String MUSIC_LAST_PLAYED = "LAST_PLAYED";
+    public static final String MUSIC_FILE = "STORED_MUSIC";
+    public static final String ARTIST_NAME = "ARTIST NAME";
+    public static final String SONG_NAME = "SONG NAME";
+
+    public static  String PATH_TO_FRAG = null;
+    public static  String ARTIST_TO_FRAG = null;
+    public static  String SONG_NAME_TO_FRAG = null;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -291,6 +309,31 @@ public class MainActivity extends AppCompatActivity {
             }
            tvEmail.setText(email);
             Glide.with(this).load(photoUrl).error(R.id.imgAvt).into(imgAvt);
+        }
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        SharedPreferences preferences = getSharedPreferences(MUSIC_LAST_PLAYED,MODE_PRIVATE);
+        String path = preferences.getString(MUSIC_FILE, null);
+        String artist = preferences.getString(ARTIST_NAME,null);
+        String song_name = preferences.getString(SONG_NAME,null);
+        if(path != null){
+            SHOW_MINI_PLAYER = true;
+            PATH_TO_FRAG = path;
+            ARTIST_TO_FRAG = artist;
+            SONG_NAME_TO_FRAG = song_name;
+        }else{
+            SHOW_MINI_PLAYER = false;
+            PATH_TO_FRAG = null;
+            ARTIST_TO_FRAG = null;
+            SONG_NAME_TO_FRAG = null;
         }
     }
 }

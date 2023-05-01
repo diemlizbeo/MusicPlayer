@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    tools:context=".fragment.PlayingBottomFragment">
+
+    <RelativeLayout
+        android:id="@+id/card_bottom_player"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:background="@drawable/background_bottom"
+        android:padding="5dp">
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/img"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:scaleType="centerCrop"
+            android:src="@drawable/dianhac" />
+
+        <ImageView
+            android:id="@+id/btNext"
+            android:layout_width="28dp"
+            android:layout_height="28dp"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:layout_marginEnd="5dp"
+            android:src="@drawable/next" />
+
+        <ImageView
+            android:id="@+id/btPause"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="10dp"
+            android:layout_toLeftOf="@+id/btNext"
+            android:src="@drawable/ic_play" />
+
+        <ImageView
+            android:id="@+id/btPrevious"
+            android:layout_width="28dp"
+            android:layout_height="28dp"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="10dp"
+            android:layout_toLeftOf="@+id/btPause"
+            android:src="@drawable/previous" />
+
+        <TextView
+            android:id="@+id/tvName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="5dp"
+            android:layout_toStartOf="@+id/btPrevious"
+            android:layout_toEndOf="@+id/img"
+            android:layout_toRightOf="@+id/img"
+            android:fontFamily="@font/robotoslab_regular"
+            android:maxLines="1"
+            android:text="Cho ngay mua tan"
+            android:textColor="#070715"
+            android:textSize="18dp" />
+
+        <TextView
+            android:id="@+id/tvArtist"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tvName"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="5dp"
+            android:layout_toStartOf="@+id/btPrevious"
+            android:layout_toEndOf="@+id/img"
+            android:layout_toRightOf="@+id/img"
+            android:maxLines="1"
+            android:text="Noo Phuoc Thinh"
+            android:textColor="#1C1C1C"
+            android:textSize="15dp"
+            android:textStyle="italic" />
+
+    </RelativeLayout>
+
+
+</FrameLayout>

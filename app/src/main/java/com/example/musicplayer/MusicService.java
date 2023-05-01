@@ -11,6 +11,7 @@ import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.app.Service;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.media.MediaMetadataRetriever;
@@ -33,11 +34,16 @@ import java.util.ArrayList;
 public class MusicService extends Service {
     IBinder iBinder = new MyBinder();
     Uri uri;
-    int position = -1;
+    public int position = -1;
     MediaPlayer mediaPlayer ;
     ActionPlayingInterface actionPlaying;
-    ArrayList<MusicFile> musicFiles = new ArrayList<>();
+    public ArrayList<MusicFile> musicFiles = new ArrayList<>();
     MediaSessionCompat mediaSessionCompat;
+
+    public static final String MUSIC_LAST_PLAYED = "LAST_PLAYED";
+    public static final String MUSIC_FILE = "STORED_MUSIC";
+    public static final String ARTIST_NAME = "ARTIST NAME";
+    public static final String SONG_NAME = "SONG NAME";
 
     @Override
     public void onCreate() {
@@ -54,7 +60,7 @@ public class MusicService extends Service {
         return iBinder;
     }
     public  class MyBinder extends Binder{
-        MusicService getService(){
+        public MusicService getService(){
             return MusicService.this;
         }
     }
@@ -71,21 +77,14 @@ public class MusicService extends Service {
             switch (actionName){
                 case "playPause":
                     Toast.makeText(this, "PlayPause", Toast.LENGTH_SHORT).show();
-                    if(actionPlaying != null){
-                        actionPlaying.btPauseClicked();
-                    }
-                    break;
+                    PauseClicked();
                 case "next":
                     Toast.makeText(this, "Next", Toast.LENGTH_SHORT).show();
-                    if(actionPlaying != null){
-                        actionPlaying.btNextClicked();
-                    }
+                    NextClicked();
                     break;
                 case "previous":
                     Toast.makeText(this, "Previous", Toast.LENGTH_SHORT).show();
-                    if(actionPlaying != null){
-                        actionPlaying.btPreviousClicked();
-                    }
+                    PreviousClicked();
                     break;
             }
         }
@@ -113,7 +112,7 @@ public class MusicService extends Service {
     void start(){
         mediaPlayer.start();
     }
-    boolean isPlaying(){
+    public boolean isPlaying(){
         return mediaPlayer.isPlaying();
     }
     void stop(){
@@ -140,6 +139,11 @@ public class MusicService extends Service {
     void createMediaPlayer(int positionInner){
         position = positionInner;
         uri = Uri.parse(musicFiles.get(position).getPath());
+        SharedPreferences.Editor editor = getSharedPreferences(MUSIC_LAST_PLAYED, MODE_PRIVATE).edit();
+        editor.putString(MUSIC_FILE, uri.toString());
+        editor.putString(SONG_NAME, musicFiles.get(position).getTitle());
+        editor.putString(ARTIST_NAME, musicFiles.get(position).getArtist());
+        editor.apply();
         mediaPlayer = MediaPlayer.create(getBaseContext(), uri);
     }
     void onCompleted(){
@@ -211,9 +215,11 @@ public class MusicService extends Service {
 //                .setStyle(new androidx.media.app.NotificationCompat.MediaStyle().setMediaSession(mediaSessionCompat.getSessionToken()))
                 .setPriority(NotificationCompat.PRIORITY_HIGH)
                 .setOnlyAlertOnce(true)
+                .setVisibility(NotificationCompat.VISIBILITY_PUBLIC)
                 .build();
         NotificationManager notificationManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
         notificationManager.notify(0,notification);
+//        startForeground(0, notification);
 
 
     }
@@ -227,6 +233,25 @@ public class MusicService extends Service {
             throw new RuntimeException(e);
         }
         return art;
+    }
+
+    public void PauseClicked(){
+        if(actionPlaying != null){
+            actionPlaying.btPauseClicked();
+        }
+
+    }
+    public void NextClicked(){
+        if(actionPlaying != null){
+            actionPlaying.btNextClicked();
+        }
+
+    }
+    public void PreviousClicked(){
+        if(actionPlaying != null){
+            actionPlaying.btPreviousClicked();
+        }
+
     }
 
 

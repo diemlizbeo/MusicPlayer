@@ -45,7 +45,7 @@ public class AlbumDetailActivity extends AppCompatActivity {
             Glide.with(this).load(img).into(imgAlbum);
         }
         else{
-            Glide.with(this).load(R.drawable.logo).into(imgAlbum);
+            Glide.with(this).load(R.drawable.album).into(imgAlbum);
 
         }
 

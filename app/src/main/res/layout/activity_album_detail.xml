@@ -1,25 +1,55 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
     android:background="#DDDDDD"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".AlbumDetailActivity">
-
-    <ImageView
-        android:id="@+id/imgAlbum"
-        android:src="@drawable/album"
-        android:layout_centerHorizontal="true"
-        android:scaleType="centerCrop"
-        android:layout_width="300dp"
-        android:layout_height="300dp"/>
-
-
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recyclerView"
-        android:layout_below="@+id/imgAlbum"
+    <LinearLayout
+        android:orientation="horizontal"
         android:layout_marginTop="20dp"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
-</RelativeLayout>
+        android:layout_height="wrap_content">
+        <ImageView
+            android:id="@+id/back"
+            android:layout_marginLeft="20dp"
+            android:layout_width="40dp"
+            android:layout_height="30dp"
+            android:src="@drawable/ic_back"/>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Feeling"
+            android:fontFamily="monospace"
+            android:layout_marginLeft="30dp"
+            android:textSize="22dp"
+            android:textColor="#285E9F" />
+
+    </LinearLayout>
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <ImageView
+            android:id="@+id/imgAlbum"
+            android:src="@drawable/album"
+            android:layout_marginTop="20dp"
+            android:layout_centerHorizontal="true"
+            android:layout_gravity="center_horizontal"
+            android:scaleType="centerCrop"
+            android:layout_width="300dp"
+            android:layout_height="300dp"/>
+
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerView"
+            android:layout_below="@+id/imgAlbum"
+            android:layout_marginTop="20dp"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
+    </LinearLayout>
+
+
+</LinearLayout>
