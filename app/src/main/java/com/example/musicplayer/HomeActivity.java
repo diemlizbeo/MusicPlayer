@@ -60,6 +60,12 @@ public class HomeActivity extends AppCompatActivity {
                         Toast.makeText(HomeActivity.this, "HOME", Toast.LENGTH_SHORT).show();
                         break;
                     }
+                    case  R.id.nav_account:{
+                        FirebaseAuth.getInstance().signOut();
+                        Intent intent = new Intent(HomeActivity.this , ProfileActivity.class);
+                        startActivity(intent);
+                        break;
+                    }
                     case  R.id.nav_logout:{
                         FirebaseAuth.getInstance().signOut();
                         Intent intent4 = new Intent(HomeActivity.this , LoginActivity.class);

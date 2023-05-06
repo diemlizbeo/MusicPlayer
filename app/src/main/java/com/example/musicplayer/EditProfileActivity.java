@@ -22,7 +22,6 @@ public class EditProfileActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit_profile);
         reference = FirebaseDatabase.getInstance().getReference("users");
-        editName = findViewById(R.id.edName);
         editEmail = findViewById(R.id.edEmail);
         editUsername = findViewById(R.id.edUsername);
         editPassword = findViewById(R.id.edPassword);

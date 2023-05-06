@@ -107,7 +107,7 @@ public class PlayingBottomFragment extends Fragment implements ServiceConnection
                             if(art != null)
                                 Glide.with(getContext()).load(art).into(img);
                             else
-                                Glide.with(getContext()).load(R.drawable.dianhac).into(img);
+                                Glide.with(getContext()).load(R.drawable.nana).into(img);
 
                             tvName.setText(SONG_NAME_TO_FRAG);
                             tvArtist.setText(ARTIST_TO_FRAG);
@@ -175,7 +175,7 @@ public class PlayingBottomFragment extends Fragment implements ServiceConnection
                     Glide.with(getContext()).load(art).into(img);
                 else
                     Glide.with(getContext()).load(R.drawable.dianhac).into(img);
-
+                btPause.setBackgroundResource(R.drawable.ic_pause);
                 tvName.setText(SONG_NAME_TO_FRAG);
                 tvArtist.setText(ARTIST_TO_FRAG);
                 Intent intent = new Intent(getContext(), MusicService.class);
@@ -210,7 +210,6 @@ public class PlayingBottomFragment extends Fragment implements ServiceConnection
     public void onServiceConnected(ComponentName name, IBinder service) {
         MusicService.MyBinder binder = (MusicService.MyBinder)service;
         musicService = binder.getService();
-
     }
 
     @Override
