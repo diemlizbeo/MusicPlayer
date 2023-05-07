@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.Activity;
 import android.app.Dialog;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -26,6 +27,11 @@ import com.google.firebase.FirebaseApp;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 public class LoginActivity extends AppCompatActivity {
     private TextInputEditText edemail, edpassword;
@@ -34,12 +40,12 @@ public class LoginActivity extends AppCompatActivity {
     ViewGroup progressView;
     protected boolean isProgressShowing = false;
     private final static int REQUEST_CODE_REGISTER = 10000;
-    private FirebaseAuth mFirebaseAuth;
+    private FirebaseAuth auth;
 
     @Override
     protected void onStart() {
         super.onStart();
-        FirebaseUser currUser = mFirebaseAuth.getCurrentUser();
+        FirebaseUser currUser = auth.getCurrentUser();
         if (currUser != null) {
             Intent intent = new Intent(getApplicationContext(), WelcomeActivity.class);
             startActivity(intent);
@@ -57,7 +63,7 @@ public class LoginActivity extends AppCompatActivity {
         edpassword = findViewById(R.id.editPassword);
         btLogin = findViewById(R.id.btLogin);
         tvResetpw = findViewById(R.id.tvResetpw);
-        mFirebaseAuth = FirebaseAuth.getInstance();
+        auth = FirebaseAuth.getInstance();
         tvSignUp = findViewById(R.id.tvSignUp);
         tvSignUp.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -70,6 +76,9 @@ public class LoginActivity extends AppCompatActivity {
         btLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                final ProgressDialog pd = new ProgressDialog(LoginActivity.this);
+                pd.setMessage("Please wait...");
+                pd.show();
                 String email, password;
                 email = String.valueOf(edemail.getText());
                 password = String.valueOf((edpassword.getText()));
@@ -82,29 +91,40 @@ public class LoginActivity extends AppCompatActivity {
                     Toast.makeText(LoginActivity.this, "Enter password", Toast.LENGTH_LONG).show();
                     return;
                 }
-                mFirebaseAuth.signInWithEmailAndPassword(edemail.getText().toString(), edpassword.getText().toString()).
-                        addOnSuccessListener(new OnSuccessListener<AuthResult>() {
-                            @Override
-                            public void onSuccess(AuthResult authResult) {
-                                Toast.makeText(LoginActivity.this, "Login Successfully", Toast.LENGTH_LONG).show();
-                                Intent intent = new Intent(LoginActivity.this, WelcomeActivity.class);
-                                startActivity(intent);
-                            }
-                        }).addOnFailureListener(new OnFailureListener() {
+                auth.signInWithEmailAndPassword(edemail.getText().toString(), edpassword.getText().toString()).
+                     addOnCompleteListener(LoginActivity.this, new OnCompleteListener<AuthResult>() {
+                         @Override
+                         public void onComplete(@NonNull Task<AuthResult> task) {
+                             if(task.isSuccessful()){
+                                 DatabaseReference reference = FirebaseDatabase.getInstance().getReference().child("Users").child(auth.getCurrentUser().getUid());
+                                 reference.addValueEventListener(new ValueEventListener() {
+                                     @Override
+                                     public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                         pd.dismiss();
+                                         Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+                                         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                                         startActivity(intent);
+                                         finish();
+                                     }
 
-                            @Override
-                            public void onFailure(@NonNull Exception e) {
-                                Toast.makeText(LoginActivity.this, "Login Failed", Toast.LENGTH_SHORT).show();
-
-                            }
-                        });
+                                     @Override
+                                     public void onCancelled(@NonNull DatabaseError error) {
+                                         pd.dismiss();
+                                     }
+                                 });
+                             }else{
+                                 pd.dismiss();
+                                 Toast.makeText(LoginActivity.this, "Authentication Failed !", Toast.LENGTH_SHORT).show();
+                             }
+                         }
+                     })  ;
             }
         });
 
         tvResetpw.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mFirebaseAuth.sendPasswordResetEmail(edemail.getText().toString()).addOnCompleteListener(new OnCompleteListener<Void>() {
+                auth.sendPasswordResetEmail(edemail.getText().toString()).addOnCompleteListener(new OnCompleteListener<Void>() {
                     @Override
                     public void onComplete(@NonNull Task<Void> task) {
                         if (task.isSuccessful()) {

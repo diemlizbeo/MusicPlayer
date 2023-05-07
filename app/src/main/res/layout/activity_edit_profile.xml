@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".EditProfileActivity"
-    android:background="#FFFFFF">
+    android:background="@drawable/gradient_bg">
     <de.hdodenhof.circleimageview.CircleImageView
         android:layout_width="100dp"
         android:layout_height="100dp"
@@ -71,7 +71,6 @@
                 android:layout_height="wrap_content"
                 android:id="@+id/edUsername"
                 android:hint="User name"
-                android:textColor="@color/white"
                 android:layout_weight="1"
                 android:textSize="18sp"/>
         </LinearLayout>
@@ -87,9 +86,8 @@
             <EditText
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/edEmail"
-                android:hint="Email"
-                android:textColor="@color/white"
+                android:id="@+id/edfullname"
+                android:hint="Full name"
                 android:layout_weight="1"
                 android:textSize="18sp"/>
         </LinearLayout>
@@ -105,10 +103,8 @@
             <EditText
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/edPassword"
-                android:hint="Password"
-                android:inputType="textPassword"
-                android:textColor="@color/white"
+                android:id="@+id/edbio"
+                android:hint="Bio"
                 android:layout_weight="1"
                 android:textSize="18sp"/>
         </LinearLayout>

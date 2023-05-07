@@ -123,7 +123,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        showInforUser();
+//        showInforUser();
 
         runPermission();
 

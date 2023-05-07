@@ -189,9 +189,9 @@ public class PlayingBottomFragment extends Fragment implements ServiceConnection
     @Override
     public void onPause() {
         super.onPause();
-        if(getContext() != null){
-            getContext().unbindService(this);
-        }
+//        if(getContext() != null){
+//            getContext().unbindService(this);
+//        }
     }
 
     private byte[] getAlbumArt(String uri) {

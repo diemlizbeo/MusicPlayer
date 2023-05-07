@@ -7,11 +7,13 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
 import android.app.Activity;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -28,6 +30,8 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.UserProfileChangeRequest;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
@@ -38,14 +42,18 @@ import com.karumi.dexter.listener.PermissionGrantedResponse;
 import com.karumi.dexter.listener.PermissionRequest;
 import com.karumi.dexter.listener.single.PermissionListener;
 
+import java.util.HashMap;
+
 public class RegisterActivity extends AppCompatActivity {
 
-    private TextInputEditText edname, edemail, edpassword, edpasswordCf;
+    private TextInputEditText edusername, edfullname, edemail, edpassword, edpasswordCf;
     private Button btSignUp;
     private TextView tvLogin;
     private ImageView imgAvt;
     Uri pickedImgUri ;
-    protected FirebaseAuth mFirebaseAuth;
+    private FirebaseAuth auth;
+    private DatabaseReference reference ;
+    private ProgressDialog pd;
 
     private static int REQUESCODE = 1 ;
 
@@ -56,9 +64,9 @@ public class RegisterActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_signup);
 
-        mFirebaseAuth = FirebaseAuth.getInstance();
-
-        edname = findViewById(R.id.edusername);
+        auth = FirebaseAuth.getInstance();
+        edfullname = findViewById(R.id.edfullname);
+        edusername = findViewById(R.id.edusername);
         edemail = findViewById(R.id.email_field);
         edpassword = findViewById(R.id.editPassword);
         edpasswordCf = findViewById(R.id.editPasswordCf);
@@ -78,35 +86,56 @@ public class RegisterActivity extends AppCompatActivity {
         btSignUp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String name = edname.getText().toString().trim();
-                String email = edemail.getText().toString().trim();
-                String pw = edpassword.getText().toString().trim();
-                String pw_cf = edpasswordCf.getText().toString().trim();
+                pd = new ProgressDialog(RegisterActivity.this);
+                pd.setMessage("Please wait...");
+                pd.show();
+                String username = edusername.getText().toString();
+                String fullname = edfullname.getText().toString();
+                String email = edemail.getText().toString();
+                String pw = edpassword.getText().toString();
+                String pw_cf = edpasswordCf.getText().toString();
 
-                if(pw.equals(pw_cf)){
-                    mFirebaseAuth.createUserWithEmailAndPassword(edemail.getText().toString(),edpassword.getText().toString()).
-                            addOnSuccessListener(new OnSuccessListener<AuthResult>() {
-                                @Override
-                                public void onSuccess(AuthResult authResult) {
-                                    Toast.makeText(RegisterActivity.this,"Register Success", Toast.LENGTH_SHORT).show();
-                                    updateUserInfor(name, pickedImgUri,mFirebaseAuth.getCurrentUser());
-                                    final Intent data = new Intent(RegisterActivity.this, LoginActivity.class);
-                                    // Truyền data vào intent
-                                    data.putExtra("email", edemail.getText().toString());
-                                    data.putExtra("pass", edpassword.getText().toString());
-                                    // Đặt resultCode là Activity.RESULT_OK
-                                    setResult(Activity.RESULT_OK, data);
-                                    finish();
-                                }
-                            }).addOnFailureListener(new OnFailureListener() {
-                                @Override
-                                public void onFailure(@NonNull Exception e) {
-                                    Toast.makeText(RegisterActivity.this, "Register Failed", Toast.LENGTH_LONG).show();
-                                }
-                            });
-                }else{
+                if (TextUtils.isEmpty(username) || TextUtils.isEmpty(fullname) ||TextUtils.isEmpty(email) || TextUtils.isEmpty(pw) || TextUtils.isEmpty(pw_cf)){
+                    Toast.makeText(RegisterActivity.this, "Empty credential$!", Toast.LENGTH_SHORT).show();
+                } else if (pw.length() < 6){
+                    Toast.makeText(RegisterActivity.this, "Password too short!", Toast.LENGTH_SHORT).show();
+                } else if (!pw.equals(pw_cf)) {
                     Toast.makeText(RegisterActivity.this, "Password is not matching", Toast.LENGTH_SHORT).show();
+                } else{
+                    auth.createUserWithEmailAndPassword(email, pw).addOnCompleteListener(RegisterActivity.this, new OnCompleteListener<AuthResult>() {
+                        @Override
+                        public void onComplete(@NonNull Task<AuthResult> task) {
+                            if(task.isSuccessful()){
+                                FirebaseUser firebaseUser = auth.getCurrentUser();
+                                String userid = firebaseUser.getUid();
+                                reference = FirebaseDatabase.getInstance().getReference().child("Users").child(userid);
+                                HashMap<String, Object> hashMap = new HashMap<>();
+                                hashMap.put("id", userid);
+                                hashMap.put("username", username.toLowerCase());
+                                hashMap.put("fullname", fullname);
+                                hashMap.put("bio", "");
+                                hashMap.put("imageurl", "default");
+
+                                reference.setValue(hashMap).addOnCompleteListener(new OnCompleteListener<Void>() {
+                                    @Override
+                                    public void onComplete(@NonNull Task<Void> task) {
+                                        if(task.isSuccessful()){
+                                            pd.dismiss();
+                                            Intent intent = new Intent(RegisterActivity.this, WelcomeActivity.class);
+                                            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+                                            startActivity(intent);
+                                        }
+                                    }
+                                });
+                            }else{
+                                pd.dismiss();
+                                Toast.makeText(RegisterActivity.this, "Register fail", Toast.LENGTH_SHORT).show();
+
+                            }
+                        }
+                    });
                 }
+
             }
         });
 
