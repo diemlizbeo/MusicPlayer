@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    app:cardCornerRadius="30dp"
+    app:cardBackgroundColor="#D9F0FA"
+    android:layout_marginBottom="10dp"
+    android:layout_width="match_parent"
+    android:layout_height="200dp">
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/img"
+                android:layout_marginTop="10dp"
+                android:src="@drawable/nana"
+                android:layout_gravity="center"
+                android:layout_width="60dp"
+                android:layout_height="60dp"/>
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_gravity="center"
+                android:layout_marginTop="10dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+                <TextView
+                    android:id="@+id/tvName"
+                    android:text="Nana"
+                    android:textSize="20dp"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:textColor="#555454"
+                    android:fontFamily="@font/rokkitt_medium"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+                <TextView
+                    android:id="@+id/tvDob"
+                    android:text="13/08/2000"
+                    android:textSize="15dp"
+                    android:layout_gravity="center"
+                    android:fontFamily="@font/rokkitt_medium"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+                <TextView
+                    android:id="@+id/tvCountry"
+                    android:text="Korea"
+                    android:textSize="15dp"
+                    android:layout_gravity="center"
+                    android:fontFamily="@font/rokkitt_medium"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+                <TextView
+                    android:id="@+id/tvLike"
+                    android:text="I like you"
+                    android:textSize="15dp"
+                    android:layout_gravity="center"
+                    android:fontFamily="@font/rokkitt_medium"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+            </LinearLayout>
+
+        </LinearLayout>
+
+</androidx.cardview.widget.CardView>

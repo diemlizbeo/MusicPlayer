@@ -19,10 +19,16 @@
         android:theme="@style/Theme.MusicPlayer"
         tools:targetApi="31">
         <activity
-            android:name=".AlbumOnlineActivity"
+            android:name=".UpdateIdolActivity"
             android:exported="false" />
         <activity
             android:name=".IdolActivity"
+            android:exported="false" />
+        <activity
+            android:name=".AlbumOnlineActivity"
+            android:exported="false" />
+        <activity
+            android:name=".AddIdolActivity"
             android:exported="false" />
         <activity
             android:name=".ProfileActivity"

@@ -15,11 +15,12 @@
         <ImageView
             android:id="@+id/back"
             android:layout_alignParentStart="true"
+            android:layout_marginLeft="20dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@drawable/baseline_arrow_back"/>
         <TextView
-            android:text="Add my idol"
+            android:text="Update my idol"
             android:textStyle="bold"
             android:textSize="20dp"
             android:layout_centerHorizontal="true"
@@ -27,9 +28,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"/>
     </RelativeLayout>
-
-
-
     <androidx.cardview.widget.CardView
         app:cardCornerRadius="20dp"
         android:layout_width="360dp"
@@ -46,7 +44,7 @@
             android:layout_marginRight="20dp"
             android:padding="5dp">
             <de.hdodenhof.circleimageview.CircleImageView
-                android:id="@+id/imgAvt"
+                android:id="@+id/img"
                 android:layout_marginTop="10dp"
                 android:layout_marginBottom="10dp"
                 android:src="@drawable/avt"
@@ -103,6 +101,7 @@
                 android:layout_height="wrap_content"/>
             <EditText
                 android:id="@+id/edlike"
+                android:maxHeight="150dp"
                 android:ems="10"
                 android:background="@drawable/custom_input"
                 android:hint="  I like ..."
@@ -112,12 +111,30 @@
                 android:layout_height="50dp"
                 />
 
-           <Button
-               android:layout_marginTop="40dp"
-               android:text="ADD"
-               android:background="@drawable/button1"
-               android:layout_width="300dp"
-               android:layout_height="wrap_content"/>
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:weightSum="2"
+                android:layout_marginTop="40dp"
+                android:layout_height="wrap_content">
+                <Button
+                    android:id="@+id/btUpdate"
+                    android:text="UPDATE"
+                    android:layout_weight="1"
+                    android:layout_marginRight="5dp"
+                    android:background="@drawable/button1"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"/>
+                <Button
+                    android:id="@+id/btRemove"
+                    android:text="REMOVE"
+                    android:layout_marginLeft="5dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/button1"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"/>
+            </LinearLayout>
+
 
         </LinearLayout>
 

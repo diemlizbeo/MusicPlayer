@@ -110,6 +110,11 @@ public class MainActivity extends AppCompatActivity {
                         startActivity(intent);
                         break;
                     }
+                    case R.id.nav_idol:{
+                        Intent intent = new Intent(MainActivity.this , IdolActivity.class);
+                        startActivity(intent);
+                        break;
+                    }
                     case  R.id.nav_logout:{
                         FirebaseAuth.getInstance().signOut();
                         Intent intent4 = new Intent(MainActivity.this , LoginActivity.class);

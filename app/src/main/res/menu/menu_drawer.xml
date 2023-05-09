@@ -11,7 +11,10 @@
             android:id="@+id/nav_account"
             android:icon="@drawable/baseline_account"
             android:title="Account" />
-
+        <item
+            android:id="@+id/nav_idol"
+            android:icon="@drawable/ic_logout"
+            android:title="Idol" />
         <item
             android:id="@+id/nav_logout"
             android:icon="@drawable/ic_logout"
