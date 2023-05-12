@@ -171,22 +171,22 @@ public class MusicService extends Service {
     void showNotification(String btPause){
         Intent intent = new Intent(this, PlayerActivity.class);
         PendingIntent contentIntent = PendingIntent.getActivity(this,
-                0,intent,0);
+                0,intent,PendingIntent.FLAG_IMMUTABLE);
 
         Intent prevIntent = new Intent(this, NotificationReceiver.class)
                 .setAction(ACTION_PREVIOUS);
         PendingIntent prevPending = PendingIntent
-                .getBroadcast(this,0,prevIntent,PendingIntent.FLAG_UPDATE_CURRENT);
+                .getBroadcast(this,0,prevIntent,PendingIntent.FLAG_IMMUTABLE);
 
         Intent pauseIntent = new Intent(this, NotificationReceiver.class)
                 .setAction(ACTION_PLAY);
         PendingIntent pausePending = PendingIntent
-                .getBroadcast(this,0,pauseIntent,PendingIntent.FLAG_UPDATE_CURRENT);
+                .getBroadcast(this,0,pauseIntent,PendingIntent.FLAG_IMMUTABLE);
 
         Intent nextIntent = new Intent(this, NotificationReceiver.class)
                 .setAction(ACTION_NEXT);
         PendingIntent nextPending = PendingIntent
-                .getBroadcast(this,0,nextIntent,PendingIntent.FLAG_UPDATE_CURRENT);
+                .getBroadcast(this,0,nextIntent,PendingIntent.FLAG_IMMUTABLE);
 
         byte[] picture = null;
         picture = getAlbumArt(musicFiles.get(position).getPath());
