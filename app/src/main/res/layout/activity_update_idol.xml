@@ -6,6 +6,8 @@
     android:orientation="vertical"
     android:background="@drawable/gradient_bg"
     android:weightSum="10"
+    tools:context=".UpdateIdolActivity"
+
     android:layout_height="match_parent">
     <RelativeLayout
         android:layout_marginTop="20dp"

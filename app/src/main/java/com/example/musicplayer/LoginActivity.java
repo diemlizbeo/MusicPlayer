@@ -69,7 +69,7 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent registerIntent = new Intent(LoginActivity.this, RegisterActivity.class);
-                startActivityForResult(registerIntent, REQUEST_CODE_REGISTER);
+                startActivity(registerIntent);
             }
         });
 
@@ -101,7 +101,7 @@ public class LoginActivity extends AppCompatActivity {
                                      @Override
                                      public void onDataChange(@NonNull DataSnapshot snapshot) {
                                          pd.dismiss();
-                                         Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+                                         Intent intent = new Intent(LoginActivity.this, WelcomeActivity.class);
                                          intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                                          startActivity(intent);
                                          finish();
@@ -164,18 +164,18 @@ public class LoginActivity extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if(requestCode == REQUEST_CODE_REGISTER) {
-            if(resultCode == Activity.RESULT_OK) {
-                // Nhận dữ liệu từ Intent trả về
-                final String email = data.getStringExtra("email");
-                final String password = data.getStringExtra("pass");
-                //Set lại giá trị cho txtEmail and password
-                edemail.setText(email);
-                edpassword.setText(password);
-            } else {
-                // DetailActivity không thành công, không có data trả về.
-            }
-        }
+//        if(requestCode == REQUEST_CODE_REGISTER) {
+//            if(resultCode == Activity.RESULT_OK) {
+//                // Nhận dữ liệu từ Intent trả về
+//                final String email = data.getStringExtra("email");
+//                final String password = data.getStringExtra("pass");
+//                //Set lại giá trị cho txtEmail and password
+//                edemail.setText(email);
+//                edpassword.setText(password);
+//            } else {
+//                // DetailActivity không thành công, không có data trả về.
+//            }
+//        }
 
     }
 }

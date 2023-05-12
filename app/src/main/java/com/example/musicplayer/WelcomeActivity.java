@@ -17,8 +17,8 @@ public class WelcomeActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.fragment_add_idol);
-//        bt = findViewById(R.id.bt);
+        setContentView(R.layout.activity_welcome);
+        bt = findViewById(R.id.bt);
 
 //        handler = new Handler();
 //        handler.postDelayed(new Runnable() {

@@ -64,7 +64,7 @@ public class PlayingBottomFragment extends Fragment implements ServiceConnection
                 if(musicService != null){
                     musicService.PauseClicked();
                     if(musicService.isPlaying()){
-                        btPause.setBackgroundResource(R.drawable.ic_pause);
+                        btPause.setBackgroundResource(R.drawable.ic_home);
 
                     }else{
                         btPause.setBackgroundResource(R.drawable.ic_play);
@@ -175,7 +175,7 @@ public class PlayingBottomFragment extends Fragment implements ServiceConnection
                     Glide.with(getContext()).load(art).into(img);
                 else
                     Glide.with(getContext()).load(R.drawable.dianhac).into(img);
-                btPause.setBackgroundResource(R.drawable.ic_pause);
+                btPause.setBackgroundResource(R.drawable.ic_home);
                 tvName.setText(SONG_NAME_TO_FRAG);
                 tvArtist.setText(ARTIST_TO_FRAG);
                 Intent intent = new Intent(getContext(), MusicService.class);

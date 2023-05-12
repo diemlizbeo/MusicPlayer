@@ -59,7 +59,7 @@ public class IdolAdapter extends RecyclerView.Adapter<IdolAdapter.IdolViewHolder
     public void onBindViewHolder(@NonNull IdolViewHolder holder, @SuppressLint("RecyclerView") int position) {
 
         final Idol idol = listIdol.get(position);
-        Picasso.get().load(idol.getIdolImg()).placeholder(R.drawable.nana).into(holder.img);
+        Picasso.get().load(idol.getIdolImg()).placeholder(R.drawable.avt).into(holder.img);
         holder.tvName.setText(idol.getName());
         holder.tvDob.setText(idol.getDob());
         holder.tvCountry.setText(idol.getCountry());
@@ -69,6 +69,7 @@ public class IdolAdapter extends RecyclerView.Adapter<IdolAdapter.IdolViewHolder
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(context, UpdateIdolActivity.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 intent.putExtra("idol", idol);
                 context.startActivity(intent);
             }

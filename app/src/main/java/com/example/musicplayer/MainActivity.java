@@ -2,6 +2,7 @@ package com.example.musicplayer;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.SearchView;
@@ -28,6 +29,7 @@ import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.media.MediaMetadataRetriever;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.provider.Settings;
@@ -46,15 +48,24 @@ import com.example.musicplayer.fragment.AlbumFragment;
 import com.example.musicplayer.fragment.ArtistFragment;
 import com.example.musicplayer.fragment.SongFragment;
 import com.example.musicplayer.model.MusicFile;
+import com.example.musicplayer.model.User;
 import com.google.android.material.navigation.NavigationView;
 import com.google.android.material.tabs.TabLayout;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 import com.karumi.dexter.Dexter;
 import com.karumi.dexter.MultiplePermissionsReport;
 import com.karumi.dexter.PermissionToken;
 import com.karumi.dexter.listener.PermissionRequest;
 import com.karumi.dexter.listener.multi.MultiplePermissionsListener;
+import com.squareup.picasso.Picasso;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -67,6 +78,8 @@ public class MainActivity extends AppCompatActivity {
     private SearchView searchView;
     private ImageView imgAvt;
     private TextView tvName,tvEmail;
+    private FirebaseUser firebaseUser;
+    private StorageReference storageRef;
     public static final int REQUEST_CODE = 1;
     public  static ArrayList<MusicFile> albums = new ArrayList<>();
     public  static ArrayList<MusicFile> artists = new ArrayList<>();
@@ -93,6 +106,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.nav_actvity_main);
         navigationView = findViewById(R.id.nav_view);
 
+        initView();
         imgAvt = navigationView.getHeaderView(0).findViewById(R.id.imgAvt);
         tvName = navigationView.getHeaderView(0).findViewById(R.id.tvName);
         tvEmail = navigationView.getHeaderView(0).findViewById(R.id.tvEmail);
@@ -106,7 +120,7 @@ public class MainActivity extends AppCompatActivity {
                         break;
                     }
                     case R.id.nav_account:{
-                        Intent intent = new Intent(MainActivity.this , ProfileActivity.class);
+                        Intent intent = new Intent(MainActivity.this , MyProfileActivity.class);
                         startActivity(intent);
                         break;
                     }
@@ -128,10 +142,13 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-//        showInforUser();
+        showInforUser();
 
-        runPermission();
+//        runPermission();
 
+        ActivityCompat.requestPermissions(MainActivity.this,
+                permissions(),
+                1);
     }
 
     private void initView() {
@@ -148,7 +165,6 @@ public class MainActivity extends AppCompatActivity {
 
 
     }
-
 
     private void runPermission(){
         if(ContextCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED){
@@ -176,6 +192,27 @@ public class MainActivity extends AppCompatActivity {
 
             }
         }
+    }
+    public static String[] storge_permissions = {
+            Manifest.permission.WRITE_EXTERNAL_STORAGE,
+            Manifest.permission.READ_EXTERNAL_STORAGE
+    };
+
+    @RequiresApi(api = Build.VERSION_CODES.TIRAMISU)
+    public static String[] storge_permissions_33 = {
+            Manifest.permission.READ_MEDIA_IMAGES,
+            Manifest.permission.READ_MEDIA_AUDIO,
+            Manifest.permission.READ_MEDIA_VIDEO
+    };
+
+    public static String[] permissions() {
+        String[] p;
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            p = storge_permissions_33;
+        } else {
+            p = storge_permissions;
+        }
+        return p;
     }
 
     public static  class ViewPagerAdapter extends FragmentPagerAdapter{
@@ -298,23 +335,25 @@ public class MainActivity extends AppCompatActivity {
 
     @SuppressLint("ResourceType")
     private void showInforUser(){
-        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-        if (user != null) {
-            // Name, email address, and profile photo Url
-            String name = user.getDisplayName();
-            String email = user.getEmail();
-            Uri photoUrl = user.getPhotoUrl();
+        firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
+        storageRef = FirebaseStorage.getInstance().getReference("uploads");
 
-            if(name == null){
-                tvName.setVisibility(View.GONE);
-            }else{
-                tvName.setVisibility(View.VISIBLE);
-                tvName.setText(name);
+        DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Users").child(firebaseUser.getUid());
+        reference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                User user = dataSnapshot.getValue(User.class);
+                tvName.setText(user.getFullname());
+                tvEmail.setText(firebaseUser.getEmail());
+                Picasso.get().load(user.getImageurl()).placeholder(R.drawable.avt).into(imgAvt);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
 
             }
-           tvEmail.setText(email);
-            Glide.with(this).load(photoUrl).error(R.id.imgAvt).into(imgAvt);
-        }
+
+        });
     }
 
     @Override

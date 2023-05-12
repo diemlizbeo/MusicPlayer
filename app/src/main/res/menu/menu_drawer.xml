@@ -13,8 +13,8 @@
             android:title="Account" />
         <item
             android:id="@+id/nav_idol"
-            android:icon="@drawable/ic_logout"
-            android:title="Idol" />
+            android:icon="@drawable/ic_heart"
+            android:title="Your Idol" />
         <item
             android:id="@+id/nav_logout"
             android:icon="@drawable/ic_logout"

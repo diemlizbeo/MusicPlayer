@@ -59,7 +59,6 @@ public class PlayerActivity extends AppCompatActivity implements  ActionPlayingI
 
     public static Uri uri;
     public static ArrayList<MusicFile> listSongs = new ArrayList<>();
-    private Thread updateSeekBar, playThread, prevThread,nextThread;
     MusicService musicService;
 
     private Handler handler = new Handler();

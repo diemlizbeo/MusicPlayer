@@ -50,6 +50,7 @@ public class EditProfileActivity extends AppCompatActivity {
     private static int REQUESCODE = 1 ;
     private FirebaseUser firebaseUser;
 
+    private ImageView back;
     private Uri mImageUri;
     private StorageTask uploadTask;
     private StorageReference storageRef;
@@ -59,6 +60,7 @@ public class EditProfileActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit_profile);
 
+        back = findViewById(R.id.back);
         titleName = findViewById(R.id.titleName);
         titleUsername = findViewById(R.id.titleUsername);
         image_profile = findViewById(R.id.profileImg);
@@ -93,6 +95,13 @@ public class EditProfileActivity extends AppCompatActivity {
         });
 
 
+        back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(EditProfileActivity.this, MyProfileActivity.class);
+                startActivity(intent);
+            }
+        });
 
 
 
@@ -110,7 +119,7 @@ public class EditProfileActivity extends AppCompatActivity {
                         username.getText().toString(),
                         bio.getText().toString());
                 Toast.makeText(EditProfileActivity.this, "Updated !!!", Toast.LENGTH_SHORT).show();
-                Intent intent = new Intent(EditProfileActivity.this, ProfileActivity.class);
+                Intent intent = new Intent(EditProfileActivity.this, MyProfileActivity.class);
                 startActivity(intent);
             }
         });

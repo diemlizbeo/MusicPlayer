@@ -147,49 +147,6 @@ public class RegisterActivity extends AppCompatActivity {
         });
     }
 
-    private void updateUserInfor(String name, Uri pickedImgUri, FirebaseUser currentUser) {
-        // first we need to upload user photo to firebase storage and get url
-
-        StorageReference mStorage = FirebaseStorage.getInstance().getReference().child("users_photos");
-        final StorageReference imageFilePath = mStorage.child(pickedImgUri.getLastPathSegment());
-        imageFilePath.putFile(pickedImgUri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-            @Override
-            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                // image uploaded succesfully
-                // now we can get our image url
-                imageFilePath.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
-                    @Override
-                    public void onSuccess(Uri uri) {
-                        // uri contain user image url
-                        UserProfileChangeRequest profleUpdate = new UserProfileChangeRequest.Builder()
-                                .setDisplayName(name)
-                                .setPhotoUri(uri)
-                                .build();
-
-                        currentUser.updateProfile(profleUpdate)
-                                .addOnCompleteListener(new OnCompleteListener<Void>() {
-                                    @Override
-                                    public void onComplete(@NonNull Task<Void> task) {
-
-                                        if (task.isSuccessful()) {
-                                            // user info updated successfully
-//                                            Toast.makeText(RegisterActivity.this, "Register Success", Toast.LENGTH_SHORT).show();
-//                                            Intent intent = new Intent(getApplicationContext(),LoginActivity.class);
-//                                            startActivity(intent);
-//                                            finish();
-                                        }
-
-                                    }
-                                });
-                    }
-                });
-
-
-            }
-        });
-    }
-
-
     private void runtimePermission(){
 
         Dexter.withContext(this)

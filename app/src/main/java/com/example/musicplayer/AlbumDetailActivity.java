@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.media.MediaMetadataRetriever;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
@@ -22,6 +23,7 @@ public class AlbumDetailActivity extends AppCompatActivity {
     private RecyclerView recyclerView;
     private ImageView imgAlbum;
     private String albumName;
+    private ImageView back;
     ArrayList<MusicFile> albumSongs = new ArrayList<>();
     AlbumDetailAdapter albumDetailAdapter;
 
@@ -32,6 +34,7 @@ public class AlbumDetailActivity extends AppCompatActivity {
         setContentView(R.layout.activity_album_detail);
         recyclerView = findViewById(R.id.recyclerView);
         imgAlbum = findViewById(R.id.imgAlbum);
+        back = findViewById(R.id.back);
         albumName = getIntent().getStringExtra("albumname");
         int j=0;
         for(int i=0;i<musicFiles.size();i++){
@@ -48,6 +51,13 @@ public class AlbumDetailActivity extends AppCompatActivity {
             Glide.with(this).load(R.drawable.album).into(imgAlbum);
 
         }
+
+        back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                getFragmentManager().popBackStack();
+            }
+        });
 
     }
 

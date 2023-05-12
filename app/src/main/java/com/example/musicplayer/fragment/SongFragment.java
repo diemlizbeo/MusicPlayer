@@ -57,7 +57,8 @@ public class SongFragment extends Fragment {
                         filterList.add(i);
                     }
                 }
-                SongFragment.musicAdapter.updateList(filterList);
+                if (filterList.size() > 0)
+                    SongFragment.musicAdapter.updateList(filterList);
                 return false;
             }
 
