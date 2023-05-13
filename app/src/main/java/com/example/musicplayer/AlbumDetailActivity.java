@@ -11,6 +11,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.example.musicplayer.adapter.AlbumDetailAdapter;
@@ -24,6 +25,7 @@ public class AlbumDetailActivity extends AppCompatActivity {
     private ImageView imgAlbum;
     private String albumName;
     private ImageView back;
+    private TextView tvnameAlbum;
     ArrayList<MusicFile> albumSongs = new ArrayList<>();
     AlbumDetailAdapter albumDetailAdapter;
 
@@ -35,7 +37,9 @@ public class AlbumDetailActivity extends AppCompatActivity {
         recyclerView = findViewById(R.id.recyclerView);
         imgAlbum = findViewById(R.id.imgAlbum);
         back = findViewById(R.id.back);
+        tvnameAlbum = findViewById(R.id.nameAlbum);
         albumName = getIntent().getStringExtra("albumname");
+        tvnameAlbum.setText(albumName);
         int j=0;
         for(int i=0;i<musicFiles.size();i++){
             if(albumName.equals(musicFiles.get(i).getAlbum())){

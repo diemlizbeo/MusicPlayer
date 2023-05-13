@@ -29,15 +29,17 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"/>
         <TextView
+            android:drawableStart="@drawable/ic_heart"
             android:id="@+id/tvAdd"
             android:text="Add"
             android:textStyle="bold"
             android:textSize="20dp"
-            android:background="@color/blue"
-            android:layout_marginRight="20dp"
+            android:gravity="center"
+            android:background="@drawable/frame_edit"
+            android:layout_marginRight="15dp"
             android:layout_alignParentEnd="true"
             android:layout_centerHorizontal="true"
-            android:layout_width="wrap_content"
+            android:layout_width="65dp"
             android:layout_height="wrap_content"/>
     </RelativeLayout>
 

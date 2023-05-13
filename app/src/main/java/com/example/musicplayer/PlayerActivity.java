@@ -70,19 +70,20 @@ public class PlayerActivity extends AppCompatActivity implements  ActionPlayingI
         super.onCreate(savedInstanceState);
 //        setFulScreen();
         setContentView(R.layout.activity_player);
-//        getSupportActionBar().hide();
-
-//        getSupportActionBar().setTitle("Now Playing");
-//        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-//        getSupportActionBar().setDisplayShowHomeEnabled(true);
-
-
-
-
         initView();
+        if(shuffle){
+            btShuffle.setBackgroundResource(R.drawable.ic_shuffle_on);
+        }else{
+            btShuffle.setBackgroundResource(R.drawable.ic_shuffle_off);
+        }
+        if(repeat){
+            btRepeat.setBackgroundResource(R.drawable.ic_repeat_on);
+        }else{
+            btRepeat.setBackgroundResource(R.drawable.ic_repeat_off);
+        }
+
+
         getIntentMethod();
-
-
         seekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
@@ -327,9 +328,9 @@ public class PlayerActivity extends AppCompatActivity implements  ActionPlayingI
                     handler.postDelayed(this, 1000);
                 }
             });
+            btPause.setBackgroundResource(R.drawable.ic_pause);
             musicService.onCompleted();
             musicService.showNotification("Pause");
-            btPause.setBackgroundResource(R.drawable.ic_pause);
             musicService.start();
         }else{
             musicService.stop();
@@ -359,9 +360,9 @@ public class PlayerActivity extends AppCompatActivity implements  ActionPlayingI
                     handler.postDelayed(this, 1000);
                 }
             });
+            btPause.setBackgroundResource(R.drawable.ic_play);
             musicService.onCompleted();
             musicService.showNotification("Play");
-            btPause.setBackgroundResource(R.drawable.ic_play);
         }
     }
 

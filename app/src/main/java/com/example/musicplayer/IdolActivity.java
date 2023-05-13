@@ -11,6 +11,7 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.musicplayer.adapter.IdolAdapter;
@@ -42,6 +43,7 @@ public class IdolActivity extends AppCompatActivity {
     private IdolAdapter idolAdapter;
     SearchView searchView;
     private TextView tvAdd;
+    private ImageView back;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,6 +51,15 @@ public class IdolActivity extends AppCompatActivity {
         setContentView(R.layout.activity_idol);
         recyclerView =findViewById(R.id.recycleView);
         tvAdd = findViewById(R.id.tvAdd);
+        back = findViewById(R.id.back);
+
+        back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onBackPressed();
+            }
+        });
+
         recyclerView.setHasFixedSize(true);
         LinearLayoutManager linearLayoutManager = new GridLayoutManager(getApplicationContext() , 2);
         recyclerView.setLayoutManager(linearLayoutManager);

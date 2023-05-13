@@ -34,25 +34,17 @@ import java.util.ArrayList;
 public class MusicService extends Service {
     IBinder iBinder = new MyBinder();
     Uri uri;
-    public int position = -1;
+    int position = -1;
     MediaPlayer mediaPlayer ;
     ActionPlayingInterface actionPlaying;
-    public ArrayList<MusicFile> musicFiles = new ArrayList<>();
+    ArrayList<MusicFile> musicFiles = new ArrayList<>();
     MediaSessionCompat mediaSessionCompat;
-
-    public static final String MUSIC_LAST_PLAYED = "LAST_PLAYED";
-    public static final String MUSIC_FILE = "STORED_MUSIC";
-    public static final String ARTIST_NAME = "ARTIST NAME";
-    public static final String SONG_NAME = "SONG NAME";
 
     @Override
     public void onCreate() {
         super.onCreate();
         mediaSessionCompat = new MediaSessionCompat(getBaseContext(), "My Audio");
-
-
     }
-
     @Nullable
     @Override
     public IBinder onBind(Intent intent) {
@@ -60,14 +52,12 @@ public class MusicService extends Service {
         return iBinder;
     }
     public  class MyBinder extends Binder{
-        public MusicService getService(){
+        MusicService getService(){
             return MusicService.this;
         }
     }
-
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
-
         int myPosition = intent.getIntExtra("servicePosition",-1);
         String actionName = intent.getStringExtra("ActionName");
         if(myPosition != -1){
@@ -77,21 +67,26 @@ public class MusicService extends Service {
             switch (actionName){
                 case "playPause":
                     Toast.makeText(this, "PlayPause", Toast.LENGTH_SHORT).show();
-                    PauseClicked();
+                    if(actionPlaying != null){
+                        actionPlaying.btPauseClicked();
+                    }
+                    break;
                 case "next":
                     Toast.makeText(this, "Next", Toast.LENGTH_SHORT).show();
-                    NextClicked();
+                    if(actionPlaying != null){
+                        actionPlaying.btNextClicked();
+                    }
                     break;
                 case "previous":
                     Toast.makeText(this, "Previous", Toast.LENGTH_SHORT).show();
-                    PreviousClicked();
+                    if(actionPlaying != null){
+                        actionPlaying.btPreviousClicked();
+                    }
                     break;
             }
         }
-
         return START_STICKY;
     }
-
     private void playMedia(int startPosition) {
         musicFiles = listSongs;
         position = startPosition;
@@ -106,18 +101,15 @@ public class MusicService extends Service {
             createMediaPlayer(position);
             mediaPlayer.start();
         }
-
     }
-
     void start(){
         mediaPlayer.start();
     }
-    public boolean isPlaying(){
+    boolean isPlaying(){
         return mediaPlayer.isPlaying();
     }
     void stop(){
         mediaPlayer.stop();
-
     }
     void release(){
         mediaPlayer.release();
@@ -127,23 +119,16 @@ public class MusicService extends Service {
     }
     void seekTo(int position){
         mediaPlayer.seekTo(position);
-
     }
     int getCurrentPosition(){
         return mediaPlayer.getCurrentPosition();
     }
-
     void pause(){
         mediaPlayer.pause();
     }
     void createMediaPlayer(int positionInner){
         position = positionInner;
         uri = Uri.parse(musicFiles.get(position).getPath());
-        SharedPreferences.Editor editor = getSharedPreferences(MUSIC_LAST_PLAYED, MODE_PRIVATE).edit();
-        editor.putString(MUSIC_FILE, uri.toString());
-        editor.putString(SONG_NAME, musicFiles.get(position).getTitle());
-        editor.putString(ARTIST_NAME, musicFiles.get(position).getArtist());
-        editor.apply();
         mediaPlayer = MediaPlayer.create(getBaseContext(), uri);
     }
     void onCompleted(){
@@ -151,49 +136,41 @@ public class MusicService extends Service {
             @Override
             public void onCompletion(MediaPlayer mp) {
                 if(actionPlaying != null){
-                    actionPlaying.btNextClicked();
                     if (mediaPlayer != null){
                         createMediaPlayer(position);
                         mediaPlayer.start();
                         onCompleted();
                     }
+                    actionPlaying.btNextClicked();
                 }
-
 //                btPause.setBackgroundResource(R.drawable.ic_pause);
-
-                }
+            }
         });
     }
     void  setCallBack(ActionPlayingInterface actionPlaying){
         this.actionPlaying  = actionPlaying;
-
     }
     void showNotification(String btPause){
         Intent intent = new Intent(this, PlayerActivity.class);
         PendingIntent contentIntent = PendingIntent.getActivity(this,
-                0,intent,PendingIntent.FLAG_IMMUTABLE);
-
+                0,intent,0);
         Intent prevIntent = new Intent(this, NotificationReceiver.class)
                 .setAction(ACTION_PREVIOUS);
         PendingIntent prevPending = PendingIntent
-                .getBroadcast(this,0,prevIntent,PendingIntent.FLAG_IMMUTABLE);
-
+                .getBroadcast(this,0,prevIntent,PendingIntent.FLAG_UPDATE_CURRENT);
         Intent pauseIntent = new Intent(this, NotificationReceiver.class)
                 .setAction(ACTION_PLAY);
         PendingIntent pausePending = PendingIntent
-                .getBroadcast(this,0,pauseIntent,PendingIntent.FLAG_IMMUTABLE);
-
+                .getBroadcast(this,0,pauseIntent,PendingIntent.FLAG_UPDATE_CURRENT);
         Intent nextIntent = new Intent(this, NotificationReceiver.class)
                 .setAction(ACTION_NEXT);
         PendingIntent nextPending = PendingIntent
-                .getBroadcast(this,0,nextIntent,PendingIntent.FLAG_IMMUTABLE);
-
+                .getBroadcast(this,0,nextIntent,PendingIntent.FLAG_UPDATE_CURRENT);
         byte[] picture = null;
         picture = getAlbumArt(musicFiles.get(position).getPath());
         Bitmap thumb = null;
         if(picture != null){
             thumb = BitmapFactory.decodeByteArray(picture,0,picture.length);
-
         }else{
             thumb = BitmapFactory.decodeResource(getResources(), R.drawable.nana);
         }
@@ -215,11 +192,9 @@ public class MusicService extends Service {
 //                .setStyle(new androidx.media.app.NotificationCompat.MediaStyle().setMediaSession(mediaSessionCompat.getSessionToken()))
                 .setPriority(NotificationCompat.PRIORITY_HIGH)
                 .setOnlyAlertOnce(true)
-                .setVisibility(NotificationCompat.VISIBILITY_PUBLIC)
                 .build();
         NotificationManager notificationManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
         notificationManager.notify(0,notification);
-//        startForeground(0, notification);
 
 
     }
@@ -233,25 +208,6 @@ public class MusicService extends Service {
             throw new RuntimeException(e);
         }
         return art;
-    }
-
-    public void PauseClicked(){
-        if(actionPlaying != null){
-            actionPlaying.btPauseClicked();
-        }
-
-    }
-    public void NextClicked(){
-        if(actionPlaying != null){
-            actionPlaying.btNextClicked();
-        }
-
-    }
-    public void PreviousClicked(){
-        if(actionPlaying != null){
-            actionPlaying.btPreviousClicked();
-        }
-
     }
 
 

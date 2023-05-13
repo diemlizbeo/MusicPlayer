@@ -6,6 +6,7 @@ import android.media.MediaMetadataRetriever;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -23,6 +24,7 @@ public class ArtistDetailActivity extends AppCompatActivity {
     private RecyclerView recyclerView;
     private ImageView imgAlbum;
     private String artistName;
+    private TextView tvnameArtist;
     private ImageView back;
     ArrayList<MusicFile> artistSongs = new ArrayList<>();
     ArtistDetailAdapter artistDetailAdapter;
@@ -34,8 +36,10 @@ public class ArtistDetailActivity extends AppCompatActivity {
         setContentView(R.layout.activity_artist_detail);
         recyclerView = findViewById(R.id.recyclerView);
         imgAlbum = findViewById(R.id.imgAlbum);
+        tvnameArtist = findViewById(R.id.nameArtist);
         back = findViewById(R.id.back);
         artistName = getIntent().getStringExtra("artistname");
+        tvnameArtist.setText(artistName);
         int j=0;
         for(int i=0;i<musicFiles.size();i++){
             if(artistName.equals(musicFiles.get(i).getArtist())){

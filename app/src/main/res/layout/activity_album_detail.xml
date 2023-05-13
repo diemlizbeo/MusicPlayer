@@ -19,7 +19,7 @@
             android:layout_height="wrap_content"
             android:src="@drawable/baseline_arrow_back"/>
         <TextView
-            android:id="@+id/nameAlbums"
+            android:id="@+id/nameAlbum"
             android:text="Albums"
             android:textStyle="bold"
             android:textSize="20dp"
