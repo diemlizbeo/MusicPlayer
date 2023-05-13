@@ -114,7 +114,6 @@ public class AddIdolActivity extends AppCompatActivity {
                 final ProgressDialog progressDialog = new ProgressDialog(AddIdolActivity.this);
                 progressDialog.setMessage("Posting");
                 progressDialog.show();
-
                 if(imgUri != null){
                     final StorageReference filereference = storageReference.child(System.currentTimeMillis() + "." + getFileExtension(imgUri));
                     uploadTask = filereference.putFile(imgUri);

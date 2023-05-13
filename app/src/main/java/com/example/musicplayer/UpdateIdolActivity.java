@@ -1,12 +1,17 @@
 package com.example.musicplayer;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.DatePickerDialog;
+import android.app.ProgressDialog;
+import android.content.ContentResolver;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
+import android.webkit.MimeTypeMap;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
@@ -14,13 +19,19 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.example.musicplayer.model.Idol;
+import com.google.android.gms.tasks.Continuation;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.StorageTask;
 import com.squareup.picasso.Picasso;
 
 import java.util.Calendar;
+import java.util.HashMap;
 
 public class UpdateIdolActivity extends AppCompatActivity {
     private ImageView img, back;
@@ -32,6 +43,7 @@ public class UpdateIdolActivity extends AppCompatActivity {
     StorageReference storageReference;
     private Idol idol;
     private DatabaseReference reference ;
+    private static int REQUESCODE = 1 ;
 
 
 
@@ -55,6 +67,9 @@ public class UpdateIdolActivity extends AppCompatActivity {
         edcountry.setText(idol.getCountry());
         edlike.setText(idol.getFavoriteReason());
         Picasso.get().load(idol.getIdolImg()).placeholder(R.drawable.avt).into(img);
+
+        storageReference = FirebaseStorage.getInstance().getReference("idols");
+
 
         eddob.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -82,10 +97,20 @@ public class UpdateIdolActivity extends AppCompatActivity {
             }
         });
 
+        img.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+//                runtimePermission();
+                Intent galleryIntent = new Intent(Intent.ACTION_GET_CONTENT);
+                galleryIntent.setType("image/*");
+                startActivityForResult(galleryIntent,REQUESCODE);
+            }
+        });
+
         btUpdate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                reference = FirebaseDatabase.getInstance().getReference().child("Idols").child(idol.getId());
+                reference = FirebaseDatabase.getInstance().getReference().child("Idols").child(idol.getIdolId());
 
                 if(isNameChanged() || isCountryChanged() || isDobChanged() || isFavoriteReasonChanged()) {
                     reference.child("name").setValue(edname.getText().toString());
@@ -100,6 +125,16 @@ public class UpdateIdolActivity extends AppCompatActivity {
                     Toast.makeText(UpdateIdolActivity.this, "No change detected", Toast.LENGTH_SHORT).show();
                 }
                 
+            }
+        });
+
+        btRemove.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                reference = FirebaseDatabase.getInstance().getReference().child("Idols").child(idol.getIdolId());
+                reference.removeValue();
+                Intent intent1 = new Intent(UpdateIdolActivity.this, IdolActivity.class);
+                startActivity(intent1);
             }
         });
     }
@@ -123,5 +158,70 @@ public class UpdateIdolActivity extends AppCompatActivity {
         if((edlike.getText().toString()).equals(idol.getFavoriteReason()))
             return false;
         return true;
+    }
+    private void uploadImage() {
+        final ProgressDialog pd = new ProgressDialog(this);
+        pd.setMessage("Uploading");
+        pd.show();
+
+        if (imgUri != null) {
+            final StorageReference filereference = storageReference.child(System.currentTimeMillis() + "." + getFileExtension(imgUri));
+
+            uploadTask = filereference.putFile(imgUri);
+            uploadTask.continueWithTask(new Continuation() {
+                @Override
+                public Object then(@NonNull Task task) throws Exception {
+                    if (!task.isSuccessful()) {
+                        throw task.getException();
+                    }
+
+                    return filereference.getDownloadUrl();
+                }
+            }).addOnCompleteListener(new OnCompleteListener() {
+                @Override
+                public void onComplete(@NonNull Task task) {
+                    if (task.isSuccessful()) {
+                        Uri downloadUri = (Uri) task.getResult();
+                        String myUrl = downloadUri.toString();
+
+                        reference = FirebaseDatabase.getInstance().getReference().child("Idols").child(idol.getIdolId());
+                        reference.child("idolImg").setValue(myUrl);
+
+                        pd.dismiss();
+                    } else {
+                        Toast.makeText(UpdateIdolActivity.this, "Failed!", Toast.LENGTH_SHORT).show();
+                    }
+                }
+
+
+            }).addOnFailureListener(new OnFailureListener() {
+                @Override
+                public void onFailure(@NonNull Exception e) {
+                    Toast.makeText(UpdateIdolActivity.this, e.getMessage(), Toast.LENGTH_SHORT).show();
+                }
+            });
+        } else {
+            Toast.makeText(UpdateIdolActivity.this, "No image selected", Toast.LENGTH_SHORT).show();
+        }
+    }
+    private String getFileExtension(Uri uri) {
+        ContentResolver contentResolver = getContentResolver();
+        MimeTypeMap mime = MimeTypeMap.getSingleton();
+
+        return mime.getExtensionFromMimeType(contentResolver.getType(uri));
+    }
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (resultCode == RESULT_OK && requestCode == REQUESCODE && data != null ) {
+
+            // the user has successfully picked an image
+            // we need to save its reference to a Uri variable
+            imgUri = data.getData() ;
+            img.setImageURI(imgUri);
+            uploadImage();
+
+        }
     }
 }

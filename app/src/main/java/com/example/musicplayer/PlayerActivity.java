@@ -53,7 +53,7 @@ public class PlayerActivity extends AppCompatActivity implements  ActionPlayingI
     private Button btNext, btPrevious, btPause, btShuffle, btRepeat;
     private TextView songLabel, singer, duration_played, duration_total;
     private SeekBar seekBar;
-    private ImageView image;
+    private ImageView image, back;
 //    public static MediaPlayer mediaPlayer;
     private int position = -1;
 
@@ -160,6 +160,12 @@ public class PlayerActivity extends AppCompatActivity implements  ActionPlayingI
                 btPreviousClicked();
             }
         });
+        back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onBackPressed();
+            }
+        });
 
 //        updateSeekBar.start();
         // change color of seek-bar
@@ -173,6 +179,7 @@ public class PlayerActivity extends AppCompatActivity implements  ActionPlayingI
     }
 
     private void initView() {
+        back = findViewById(R.id.back);
 
         btNext = findViewById(R.id.btNext);
         image = findViewById(R.id.img);

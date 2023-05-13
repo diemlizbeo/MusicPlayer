@@ -27,7 +27,7 @@ import com.squareup.picasso.Picasso;
 public class MyProfileActivity extends AppCompatActivity {
     TextView profileName, profileEmail, profileUsername, profileBio;
     TextView titleName, titleUsername;
-    ImageView image_profile;
+    ImageView image_profile, back;
 
     Button editProfile;
     private FirebaseUser firebaseUser;
@@ -47,6 +47,8 @@ public class MyProfileActivity extends AppCompatActivity {
         titleUsername = findViewById(R.id.titleUsername);
         editProfile = findViewById(R.id.editButton);
         image_profile = findViewById(R.id.profileImg);
+        back = findViewById(R.id.back);
+
         Toast.makeText(MyProfileActivity.this, "!!!!", Toast.LENGTH_SHORT).show();
         firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
         storageRef = FirebaseStorage.getInstance().getReference("uploads");
@@ -76,6 +78,12 @@ public class MyProfileActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intent = new Intent(MyProfileActivity.this, EditProfileActivity.class);
                 startActivity(intent);
+            }
+        });
+        back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onBackPressed();
             }
         });
 

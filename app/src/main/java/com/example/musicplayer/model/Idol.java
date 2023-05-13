@@ -4,13 +4,13 @@ import java.io.Serializable;
 
 public class Idol implements Serializable {
 
-    private String id, country, dob, favoriteReason, idolImg, name, publisher;
+    private String idolId, country, dob, favoriteReason, idolImg, name, publisher;
 
     public Idol() {
     }
 
-    public Idol(String id, String country, String dob, String favoriteReason, String idolImg, String name, String publisher) {
-        this.id = id;
+    public Idol(String idolId, String country, String dob, String favoriteReason, String idolImg, String name, String publisher) {
+        this.idolId = idolId;
         this.country = country;
         this.dob = dob;
         this.favoriteReason = favoriteReason;
@@ -19,12 +19,12 @@ public class Idol implements Serializable {
         this.publisher = publisher;
     }
 
-    public String getId() {
-        return id;
+    public String getIdolId() {
+        return idolId;
     }
 
-    public void setId(String id) {
-        this.id = id;
+    public void setIdolId(String idolId) {
+        this.idolId = idolId;
     }
 
     public String getCountry() {

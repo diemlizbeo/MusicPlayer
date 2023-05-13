@@ -55,7 +55,7 @@ public class AlbumDetailActivity extends AppCompatActivity {
         back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                getFragmentManager().popBackStack();
+                onBackPressed();
             }
         });
 

@@ -4,6 +4,7 @@ import static com.example.musicplayer.MainActivity.musicFiles;
 
 import android.media.MediaMetadataRetriever;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.ImageView;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -22,6 +23,7 @@ public class ArtistDetailActivity extends AppCompatActivity {
     private RecyclerView recyclerView;
     private ImageView imgAlbum;
     private String artistName;
+    private ImageView back;
     ArrayList<MusicFile> artistSongs = new ArrayList<>();
     ArtistDetailAdapter artistDetailAdapter;
 
@@ -32,6 +34,7 @@ public class ArtistDetailActivity extends AppCompatActivity {
         setContentView(R.layout.activity_artist_detail);
         recyclerView = findViewById(R.id.recyclerView);
         imgAlbum = findViewById(R.id.imgAlbum);
+        back = findViewById(R.id.back);
         artistName = getIntent().getStringExtra("artistname");
         int j=0;
         for(int i=0;i<musicFiles.size();i++){
@@ -48,6 +51,12 @@ public class ArtistDetailActivity extends AppCompatActivity {
             Glide.with(this).load(R.drawable.logo).into(imgAlbum);
 
         }
+        back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onBackPressed();
+            }
+        });
 
     }
 

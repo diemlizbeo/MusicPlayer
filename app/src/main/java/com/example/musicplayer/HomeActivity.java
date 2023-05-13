@@ -62,7 +62,7 @@ public class HomeActivity extends AppCompatActivity {
                     }
                     case  R.id.nav_account:{
                         FirebaseAuth.getInstance().signOut();
-                        Intent intent = new Intent(HomeActivity.this , ProfileActivity.class);
+                        Intent intent = new Intent(HomeActivity.this , MyProfileActivity.class);
                         startActivity(intent);
                         break;
                     }
