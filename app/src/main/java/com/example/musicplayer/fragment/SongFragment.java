@@ -1,6 +1,7 @@
 package com.example.musicplayer.fragment;
 
-import static com.example.musicplayer.MainActivity.musicFiles;
+import static com.example.musicplayer.HomeActivity.musicFiles;
+
 
 import android.os.Bundle;
 import android.view.LayoutInflater;

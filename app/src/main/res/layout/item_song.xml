@@ -15,7 +15,7 @@
 
         <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/img"
-            android:src="@drawable/nana"
+            android:src="@drawable/welcome_logo"
             android:layout_gravity="center"
             android:layout_width="50dp"
             android:layout_height="50dp"/>

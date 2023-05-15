@@ -22,18 +22,6 @@
             app:searchIcon="@drawable/ic_search" />
     </RelativeLayout>
 
-<!--    <TextView-->
-<!--        android:text="Danh sach bai hat"-->
-<!--        android:background="@drawable/button"-->
-<!--        android:layout_marginTop="10dp"-->
-<!--        android:textSize="20dp"-->
-<!--        android:fontFamily="serif-monospace"-->
-<!--        android:textStyle="bold"-->
-<!--        android:textColor="@color/white"-->
-<!--        android:layout_width="300dp"-->
-<!--        android:layout_gravity="center"-->
-<!--        android:gravity="center"-->
-<!--        android:layout_height="30dp"/>-->
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerView"
         android:layout_marginTop="30dp"

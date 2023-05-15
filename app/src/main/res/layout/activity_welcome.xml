@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:orientation="vertical"
-    android:background="#EDCEE6"
+    android:background="@color/pinkEDCEE6"
     tools:context=".WelcomeActivity"
     android:layout_height="match_parent">
 
@@ -27,7 +27,7 @@
         android:layout_height="wrap_content"
         android:gravity="center"
         android:text="Listen anywhere anytime"
-        android:textColor="#2196F3"
+        android:textColor="@color/blue2196F3"
         android:fontFamily="serif-monospace"
         android:textSize="24dp"
         android:textStyle="bold"
@@ -44,7 +44,7 @@
         android:layout_height="wrap_content"
         android:gravity="center"
         android:text="Let the magic of music inspire your soul !"
-        android:textColor="#1B6DAC"
+        android:textColor="@color/blue1B6DAC"
         android:textSize="16dp"
         android:fontFamily="sans-serif-condensed"
         android:textStyle="italic"

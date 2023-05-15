@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".fragment.InternetFragment"
+    android:orientation="vertical"
+    android:layout_gravity="center">
+
+
+    <androidx.cardview.widget.CardView
+        app:cardCornerRadius="20dp"
+        app:cardBackgroundColor="@color/grayE3E0E0"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <RelativeLayout
+            android:layout_marginTop="20dp"
+            android:layout_marginLeft="20dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/imgHello"
+                android:src="@drawable/avt"
+                android:layout_alignParentStart="true"
+                android:layout_width="40dp"
+                android:layout_height="40dp"/>
+            <TextView
+                android:id="@+id/tvHello"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toEndOf="@+id/imgHello"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="10dp"
+                android:text="Hey, Diembeo !"
+                android:textSize="18dp" />
+            <TextView
+                android:layout_below="@+id/tvHello"
+                android:text="Find the best music for you"
+                android:layout_marginTop="10dp"
+                android:textSize="22dp"
+                android:fontFamily="@font/robotoslab_regular"
+                android:layout_marginLeft="10dp"
+                android:textStyle="bold"
+                android:layout_marginBottom="20dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+
+        </RelativeLayout>
+
+    </androidx.cardview.widget.CardView>
+
+
+
+    <androidx.appcompat.widget.SearchView
+        android:id="@+id/searchView"
+        android:layout_marginTop="20dp"
+        app:queryHint="Explore all music"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="260dp">
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <TextView
+                android:text="Trend Music"
+                android:textSize="24dp"
+                android:layout_alignParentStart="true"
+                android:textStyle="bold"
+                android:layout_marginTop="20dp"
+                android:layout_centerVertical="true"
+
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+            <TextView
+                android:id="@+id/tvGetTrend"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
+                android:textColor="@color/blue1B6DAC"
+                android:text="Explore all"/>
+        </RelativeLayout>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recycleViewTrend"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="260dp">
+        <RelativeLayout
+
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <TextView
+                android:text="All Music"
+                android:textSize="24dp"
+                android:layout_alignParentStart="true"
+                android:textStyle="bold"
+                android:layout_marginTop="20dp"
+                android:layout_centerVertical="true"
+
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+            <TextView
+                android:id="@+id/tvGetAll"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
+                android:textColor="@color/blue1B6DAC"
+                android:text="Explore all"/>
+        </RelativeLayout>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recycleViewAll"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+    </LinearLayout>
+
+
+
+</LinearLayout>

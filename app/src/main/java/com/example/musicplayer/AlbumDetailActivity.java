@@ -1,6 +1,10 @@
 package com.example.musicplayer;
 
-import static com.example.musicplayer.MainActivity.musicFiles;
+
+
+
+
+import static com.example.musicplayer.HomeActivity.musicFiles;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;

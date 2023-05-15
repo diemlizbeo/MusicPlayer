@@ -113,14 +113,18 @@ public class UpdateIdolActivity extends AppCompatActivity {
                 reference = FirebaseDatabase.getInstance().getReference().child("Idols").child(idol.getIdolId());
 
                 if(isNameChanged() || isCountryChanged() || isDobChanged() || isFavoriteReasonChanged()) {
-                    reference.child("name").setValue(edname.getText().toString());
-                    reference.child("dob").setValue(eddob.getText().toString());
-                    reference.child("country").setValue(edcountry.getText().toString());
-                    reference.child("favoriteReason").setValue(edlike.getText().toString());
-                    Toast.makeText(UpdateIdolActivity.this, "Updated !!!", Toast.LENGTH_SHORT).show();
-                    Intent intent1 = new Intent(UpdateIdolActivity.this, IdolActivity.class);
-                    startActivity(intent1);
+                    if(edname.getText().toString().equals("") || eddob.getText().toString().equals("") || edcountry.getText().toString().equals("") || edlike.getText().toString().equals("")) {
+                        Toast.makeText(UpdateIdolActivity.this, "Please enter data", Toast.LENGTH_SHORT).show();
 
+                    }else{
+                        reference.child("name").setValue(edname.getText().toString());
+                        reference.child("dob").setValue(eddob.getText().toString());
+                        reference.child("country").setValue(edcountry.getText().toString());
+                        reference.child("favoriteReason").setValue(edlike.getText().toString());
+                        Toast.makeText(UpdateIdolActivity.this, "Updated !!!", Toast.LENGTH_SHORT).show();
+                        Intent intent1 = new Intent(UpdateIdolActivity.this, IdolActivity.class);
+                        startActivity(intent1);
+                    }
                 }else{
                     Toast.makeText(UpdateIdolActivity.this, "No change detected", Toast.LENGTH_SHORT).show();
                 }

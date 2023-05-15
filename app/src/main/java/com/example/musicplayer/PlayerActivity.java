@@ -4,8 +4,11 @@ import static com.example.musicplayer.ApplicationClass.ACTION_NEXT;
 import static com.example.musicplayer.ApplicationClass.ACTION_PLAY;
 import static com.example.musicplayer.ApplicationClass.ACTION_PREVIOUS;
 import static com.example.musicplayer.ApplicationClass.CHANNEL_ID_2;
-import static com.example.musicplayer.MainActivity.repeat;
-import static com.example.musicplayer.MainActivity.shuffle;
+import static com.example.musicplayer.HomeActivity.listMusicOnline;
+//import static com.example.musicplayer.MainActivity.listMusicOnline;
+import static com.example.musicplayer.HomeActivity.musicFiles;
+import static com.example.musicplayer.HomeActivity.repeat;
+import static com.example.musicplayer.HomeActivity.shuffle;
 import static com.example.musicplayer.adapter.AlbumDetailAdapter.listAlbum;
 import static com.example.musicplayer.adapter.ArtistDetailAdapter.listArtist;
 import static com.example.musicplayer.adapter.MusicAdapter.listFile;
@@ -391,8 +394,10 @@ public class PlayerActivity extends AppCompatActivity implements  ActionPlayingI
             listSongs = listAlbum;
         } else if (sender != null && sender.equals("artistDetails")){
             listSongs = listArtist;
+        }else if (sender != null && sender.equals("musicOnline")){
+            listSongs = listMusicOnline;
         }else{
-            listSongs = listFile;
+            listSongs = musicFiles;
         }
         if(listSongs != null){
             btPause.setBackgroundResource(R.drawable.ic_pause);

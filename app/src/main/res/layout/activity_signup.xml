@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     tools:context=".RegisterActivity"
     android:orientation="vertical"
-    android:background="#E1C7D1"
+    android:background="@color/pinkE1C7D1"
     android:layout_gravity="center"
     android:theme="@style/Theme.MaterialComponents.DayNight.NoActionBar">
 
@@ -23,7 +23,7 @@
             android:src="@drawable/logo" />
         <TextView
             android:text="SIGN UP"
-            android:textColor="#03A9F4"
+            android:textColor="#E1C7D1"
             android:textSize="30dp"
             android:textStyle="bold"
             android:fontFamily="serif-monospace"

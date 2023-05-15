@@ -10,7 +10,7 @@
 
     <RelativeLayout
         android:id="@+id/relativeLayout"
-        android:background="#9A9ADAF6"
+        android:background="@color/blue9A9ADAF6"
         android:layout_width="wrap_content"
         android:layout_height="match_parent">
 

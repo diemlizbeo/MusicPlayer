@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/mInternet"
+        android:icon="@drawable/ic_internet"
+        android:title="Online" />
+    <item
+        android:id="@+id/mPhone"
+        android:icon="@drawable/ic_phone"
+        android:title="Local" />
+    <item
+        android:id="@+id/mAccount"
+        android:icon="@drawable/ic_account"
+        android:title="Account" />
+    <item
+        android:id="@+id/mIdol"
+        android:icon="@drawable/ic_favorite"
+        android:title="Your Idol" />
+</menu>

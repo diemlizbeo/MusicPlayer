@@ -94,8 +94,7 @@ public class AddIdolActivity extends AppCompatActivity {
         back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(AddIdolActivity.this , IdolActivity.class));
-                finish();
+                onBackPressed();
             }
         });
         img.setOnClickListener(new View.OnClickListener() {
@@ -130,24 +129,29 @@ public class AddIdolActivity extends AppCompatActivity {
                         @Override
                         public void onComplete(@NonNull Task task) {
                             if(task.isSuccessful()){
-                                Uri downloadUri = (Uri) task.getResult();
-                                myUrl = downloadUri.toString();
-                                DatabaseReference  reference = FirebaseDatabase.getInstance().getReference("Idols");
-                                String idolID = reference.push().getKey();
-                                HashMap<String , Object> hashMap = new HashMap<>();
-                                hashMap.put("idolId" , idolID);
-                                hashMap.put("name", edname.getText().toString());
-                                hashMap.put("idolImg" , myUrl);
-                                hashMap.put("dob" , eddob.getText().toString());
-                                hashMap.put("country" , edcountry.getText().toString());
-                                hashMap.put("favoriteReason" , edlike.getText().toString());
-                                hashMap.put("publisher" , FirebaseAuth.getInstance().getCurrentUser().getUid());
+                                if(edname.getText().toString() != null && eddob.getText().toString() != null && edcountry.getText().toString() != null && edlike.getText().toString() != null){
+                                    Uri downloadUri = (Uri) task.getResult();
+                                    myUrl = downloadUri.toString();
+                                    DatabaseReference  reference = FirebaseDatabase.getInstance().getReference("Idols");
+                                    String idolID = reference.push().getKey();
+                                    HashMap<String , Object> hashMap = new HashMap<>();
+                                    hashMap.put("idolId" , idolID);
+                                    hashMap.put("name", edname.getText().toString());
+                                    hashMap.put("idolImg" , myUrl);
+                                    hashMap.put("dob" , eddob.getText().toString());
+                                    hashMap.put("country" , edcountry.getText().toString());
+                                    hashMap.put("favoriteReason" , edlike.getText().toString());
+                                    hashMap.put("publisher" , FirebaseAuth.getInstance().getCurrentUser().getUid());
 
-                                reference.child(idolID).setValue(hashMap);
-                                progressDialog.dismiss();
+                                    reference.child(idolID).setValue(hashMap);
+                                    progressDialog.dismiss();
 
-                                startActivity(new Intent(AddIdolActivity.this , IdolActivity.class));
-                                finish();
+                                    startActivity(new Intent(AddIdolActivity.this , IdolActivity.class));
+                                    finish();
+                                }else {
+                                    Toast.makeText(AddIdolActivity.this, "Please enter data", Toast.LENGTH_SHORT).show();
+                                }
+
                             } else {
                                 Toast.makeText(AddIdolActivity.this, "Failed!", Toast.LENGTH_SHORT).show();
                             }

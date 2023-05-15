@@ -1,6 +1,9 @@
 package com.example.musicplayer.fragment;
 
-import static com.example.musicplayer.MainActivity.artists;
+
+
+
+import static com.example.musicplayer.HomeActivity.artists;
 
 import android.os.Bundle;
 

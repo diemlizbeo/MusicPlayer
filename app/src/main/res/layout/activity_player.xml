@@ -3,7 +3,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:background="#FFFFFF"
+    android:background="@drawable/gradient_blue"
     android:id="@+id/linearLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -60,7 +60,6 @@
                 android:id="@+id/songLabel"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Song Name"
                 android:textSize="22dp"
                 android:textAlignment="center"
                 android:textColor="@color/black" />
@@ -68,7 +67,6 @@
                 android:id="@+id/tvSinger"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Noo Phuoc Thinh"
                 android:layout_marginTop="10dp"
                 android:textSize="18dp"
                 android:textAlignment="center" />
@@ -85,13 +83,11 @@
                 android:layout_height="wrap_content">
                 <TextView
                     android:id="@+id/tvDuration_played"
-                    android:text="1:32"
                     android:layout_alignParentStart="true"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"/>
                 <TextView
                     android:id="@+id/tvDurationtotal"
-                    android:text="3:21"
                     android:layout_alignParentEnd="true"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"/>
@@ -102,26 +98,28 @@
                 android:layout_marginTop="10dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:thumb="@drawable/rabbit"
+                android:thumb="@drawable/ic_heart"
                 android:progressTint="#E91E63" />
 
             <RelativeLayout
                 android:layout_marginTop="10dp"
+                android:background="@drawable/bg_player"
+
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="match_parent">
                 <Button
                     android:id="@+id/btShuffle"
-                    android:layout_width="40dp"
                     android:layout_alignParentStart="true"
                     android:layout_marginStart="30dp"
                     android:layout_centerVertical="true"
-                    android:layout_height="40dp"
+                    android:layout_width="35dp"
+                    android:layout_height="35dp"
                     android:background="@drawable/ic_shuffle_off" />
 
                 <Button
                     android:id="@+id/btPrevious"
-                    android:layout_width="40dp"
-                    android:layout_height="40dp"
+                    android:layout_width="35dp"
+                    android:layout_height="35dp"
                     android:layout_centerVertical="true"
                     android:layout_toStartOf="@+id/btPause"
                     android:layout_marginEnd="20dp"
@@ -130,25 +128,25 @@
 
                 <Button
                     android:id="@+id/btPause"
-                    android:layout_width="50dp"
+                    android:layout_width="40dp"
                     android:layout_centerHorizontal="true"
                     android:layout_centerVertical="true"
-                    android:layout_height="50dp"
+                    android:layout_height="40dp"
                     android:gravity="center"
                     android:background="@drawable/ic_pause" />
 
                 <Button
                     android:id="@+id/btNext"
-                    android:layout_width="40dp"
-                    android:layout_height="40dp"
+                    android:layout_width="35dp"
+                    android:layout_height="35dp"
                     android:layout_centerVertical="true"
                     android:layout_toEndOf="@+id/btPause"
                     android:layout_marginStart="20dp"
                     android:background="@drawable/ic_next" />
                 <Button
                     android:id="@+id/btRepeat"
-                    android:layout_width="40dp"
-                    android:layout_height="40dp"
+                    android:layout_width="35dp"
+                    android:layout_height="35dp"
                     android:layout_centerVertical="true"
                     android:layout_marginEnd="30dp"
                     android:layout_alignParentEnd="true"

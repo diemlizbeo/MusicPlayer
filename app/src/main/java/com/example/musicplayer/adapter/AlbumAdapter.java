@@ -19,16 +19,22 @@ import com.example.musicplayer.model.MusicFile;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
 
 public class AlbumAdapter extends RecyclerView.Adapter<AlbumAdapter.AlbumViewHolder> {
 
     private Context context;
     private ArrayList<MusicFile> listAlbum;
     View view;
+    public void setList(ArrayList<MusicFile> list){
+        this.listAlbum = list;
+        notifyDataSetChanged();
+    }
 
     public AlbumAdapter(Context context, ArrayList<MusicFile> listAlbum) {
         this.context = context;
         this.listAlbum = listAlbum;
+        notifyDataSetChanged();
     }
 
     @NonNull

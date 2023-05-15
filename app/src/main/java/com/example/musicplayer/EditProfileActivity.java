@@ -117,23 +117,28 @@ public class EditProfileActivity extends AppCompatActivity {
                 updateProfile(fullname.getText().toString(),
                         username.getText().toString(),
                         bio.getText().toString());
-                Toast.makeText(EditProfileActivity.this, "Updated !!!", Toast.LENGTH_SHORT).show();
-                Intent intent = new Intent(EditProfileActivity.this, MyProfileActivity.class);
-                startActivity(intent);
+
             }
         });
     }
 
     private void updateProfile(String fullname, String username, String bio) {
 
-        DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Users").child(firebaseUser.getUid());
 
-        HashMap<String, Object> hashMap = new HashMap<>();
-        hashMap.put("fullname", fullname);
-        hashMap.put("username", username);
-        hashMap.put("bio", bio);
+        if(!(fullname.equals("") || username.equals("") || bio.equals(""))) {
+            DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Users").child(firebaseUser.getUid());
+            HashMap<String, Object> hashMap = new HashMap<>();
+            hashMap.put("fullname", fullname);
+            hashMap.put("username", username);
+            hashMap.put("bio", bio);
+            reference.updateChildren(hashMap);
+            Toast.makeText(EditProfileActivity.this, "Updated !!!", Toast.LENGTH_SHORT).show();
+            Intent intent = new Intent(EditProfileActivity.this, MyProfileActivity.class);
+            startActivity(intent);
+        }else{
+            Toast.makeText(this, "Please enter data !", Toast.LENGTH_SHORT).show();
+        }
 
-        reference.updateChildren(hashMap);
 
     }
 

@@ -4,19 +4,19 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity"
+    tools:context=".fragment.InternetFragment"
     android:orientation="vertical"
     android:layout_gravity="center"
     android:theme="@style/Theme.MaterialComponents.DayNight.NoActionBar">
 
-      <com.google.android.material.tabs.TabLayout
+    <com.google.android.material.tabs.TabLayout
         android:id="@+id/tabLayout"
-        android:background="#66B1D1"
+        android:background="@color/blue66B1D1"
         app:tabIndicator="@drawable/tab_indicator"
         app:tabIndicatorGravity="center"
         app:tabIndicatorFullWidth="true"
         app:tabIndicatorHeight="40dp"
-        app:tabIndicatorColor="#F6BBE2"
+        app:tabIndicatorColor="@color/pinkF6BBE2"
         app:tabTextColor="@color/white"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>

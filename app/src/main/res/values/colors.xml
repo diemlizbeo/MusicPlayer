@@ -13,5 +13,14 @@
     <color name="pink">#DD8BA9</color>
     <color name="pinks">#E64781</color>
     <color name="blue">#88C8E4</color>
+    <color name="blue66B1D1">#66B1D1</color>
+
+    <color name="pinkF6BBE2">#F6BBE2</color>
+    <color name="grayE3E0E0">#E3E0E0</color>
+    <color name="blue9A9ADAF6">#9A9ADAF6</color>
+    <color name="pinkEDCEE6">#EDCEE6</color>
+    <color name="blue2196F3">#2196F3</color>
+    <color name="blue1B6DAC">#1B6DAC</color>
+    <color name="pinkE1C7D1">#E1C7D1</color>
 
 </resources>
