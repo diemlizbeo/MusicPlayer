@@ -24,6 +24,18 @@
         android:theme="@style/Theme.MusicPlayer"
         tools:targetApi="31">
         <activity
+            android:name=".ArtistOnlineActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ArtistOnlineDetailActivity"
+            android:exported="false" />
+        <activity
+            android:name=".TrendMusicActivity"
+            android:exported="false" />
+        <activity
+            android:name=".AlbumOnlineDetailActivity"
+            android:exported="false" />
+        <activity
             android:name=".AllMusicActivity"
             android:exported="false" />
         <activity

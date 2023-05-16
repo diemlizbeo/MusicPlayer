@@ -6,11 +6,14 @@ import static com.example.musicplayer.ApplicationClass.ACTION_PREVIOUS;
 import static com.example.musicplayer.ApplicationClass.CHANNEL_ID_2;
 import static com.example.musicplayer.HomeActivity.listMusicOnline;
 //import static com.example.musicplayer.MainActivity.listMusicOnline;
+import static com.example.musicplayer.HomeActivity.listMusicTrend;
 import static com.example.musicplayer.HomeActivity.musicFiles;
 import static com.example.musicplayer.HomeActivity.repeat;
 import static com.example.musicplayer.HomeActivity.shuffle;
 import static com.example.musicplayer.adapter.AlbumDetailAdapter.listAlbum;
+import static com.example.musicplayer.adapter.AlbumOnlineDetailAdapter.listAlbumOnline;
 import static com.example.musicplayer.adapter.ArtistDetailAdapter.listArtist;
+import static com.example.musicplayer.adapter.ArtistOnlineDetailAdapter.listArtistOnline;
 import static com.example.musicplayer.adapter.MusicAdapter.listFile;
 
 import androidx.annotation.NonNull;
@@ -396,7 +399,14 @@ public class PlayerActivity extends AppCompatActivity implements  ActionPlayingI
             listSongs = listArtist;
         }else if (sender != null && sender.equals("musicOnline")){
             listSongs = listMusicOnline;
-        }else{
+        }else if (sender != null && sender.equals("musicTrend")){
+            listSongs = listMusicTrend;
+        }else if(sender != null && sender.equals("albumOnlineDetails")){
+            listSongs = listAlbumOnline;
+        }else if(sender != null && sender.equals("artistOnlineDetails")){
+            listSongs = listArtistOnline;
+        }
+        else{
             listSongs = musicFiles;
         }
         if(listSongs != null){

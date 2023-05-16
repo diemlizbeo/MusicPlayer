@@ -106,6 +106,12 @@ public class UpdateIdolActivity extends AppCompatActivity {
                 startActivityForResult(galleryIntent,REQUESCODE);
             }
         });
+        back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onBackPressed();
+            }
+        });
 
         btUpdate.setOnClickListener(new View.OnClickListener() {
             @Override

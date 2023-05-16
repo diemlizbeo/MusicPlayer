@@ -8,6 +8,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.annotation.SuppressLint;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.example.musicplayer.adapter.MusicOnlineAdapter;
@@ -16,7 +18,7 @@ import com.google.firebase.auth.FirebaseUser;
 public class AllMusicActivity extends AppCompatActivity {
     private RecyclerView recyclerView;
     private MusicOnlineAdapter musicAdapter;
-    private FirebaseUser firebaseUser;
+    private ImageView back;
 
     @SuppressLint("MissingInflatedId")
     @Override
@@ -24,7 +26,7 @@ public class AllMusicActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_all_music);
         recyclerView = findViewById(R.id.recyclerView);
-
+        back = findViewById(R.id.back);
         recyclerView.setHasFixedSize(true);
         if(!(listMusicOnline.size() < 1 )){
             Toast.makeText(AllMusicActivity.this,String.valueOf(listMusicOnline.size()) , Toast.LENGTH_SHORT).show();
@@ -34,5 +36,11 @@ public class AllMusicActivity extends AppCompatActivity {
 
 
         }
+        back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onBackPressed();
+            }
+        });
     }
 }

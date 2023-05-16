@@ -9,7 +9,6 @@
     <androidx.viewpager.widget.ViewPager
         android:id="@+id/viewPager"
         android:layout_above="@+id/bottomNavigation"
-        android:layout_alignParentBottom="true"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
 
@@ -20,8 +19,7 @@
         android:layout_alignParentBottom="true"
         android:layout_marginEnd="20dp"
         android:layout_marginStart="20dp"
-        android:layout_marginBottom="30dp"
-        android:layout_marginTop="30dp"
+        android:layout_marginBottom="5dp"
         app:itemPaddingBottom="-10dp"
         app:itemTextColor="#252525"
         android:background="@drawable/bottom_bg"

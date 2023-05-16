@@ -43,6 +43,7 @@ import com.example.musicplayer.fragment.ArtistFragment;
 import com.example.musicplayer.fragment.OnlineFragment;
 import com.example.musicplayer.fragment.SongFragment;
 import com.example.musicplayer.model.MusicFile;
+import com.example.musicplayer.model.MusicTrend;
 import com.example.musicplayer.model.User;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationView;
@@ -85,9 +86,15 @@ public class HomeActivity extends AppCompatActivity {
     public  static ArrayList<MusicFile> albums = new ArrayList<>();
     public  static ArrayList<MusicFile> artists = new ArrayList<>();
     public static ArrayList<MusicFile> musicFiles = new ArrayList<>();
+    public static ArrayList<MusicFile> listalbumOnline = new ArrayList<>();
+    public static ArrayList<MusicFile> listartistOnline = new ArrayList<>();
+
+    public static ArrayList<String> albumOnlinetmp = new ArrayList<>();
+    public static ArrayList<String> artistOnlinetmp = new ArrayList<>();
 
     public static ArrayList<MusicFile> listMusicOnline = new ArrayList<>();
 
+    public static ArrayList<MusicFile> listMusicTrend = new ArrayList<>();
 
 
     @Override
@@ -140,12 +147,20 @@ public class HomeActivity extends AppCompatActivity {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 listMusicOnline.clear();
+                albumOnlinetmp.clear();
+                artistOnlinetmp.clear();
                 for (DataSnapshot snapshot : dataSnapshot.getChildren()){
-                    MusicFile idol = snapshot.getValue(MusicFile.class);
-                    listMusicOnline.add(idol);
+                    MusicFile ms = snapshot.getValue(MusicFile.class);
+                    listMusicOnline.add(ms);
+                    if(!albumOnlinetmp.contains(ms.getAlbum())){
+                        listalbumOnline.add(ms);
+                        albumOnlinetmp.add(ms.getAlbum());
+                    }
+                    if(!artistOnlinetmp.contains(ms.getArtist())){
+                        listartistOnline.add(ms);
+                        artistOnlinetmp.add(ms.getArtist());
+                    }
                 }
-
-
             }
 
             @Override
@@ -153,6 +168,36 @@ public class HomeActivity extends AppCompatActivity {
 
             }
         });
+        DatabaseReference referenceTrend = FirebaseDatabase.getInstance().getReference("Trend");
+        referenceTrend.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                listMusicTrend.clear();
+                for (DataSnapshot snapshot1 : snapshot.getChildren()){
+                    MusicTrend song = snapshot1.getValue(MusicTrend.class);
+                    DatabaseReference s = FirebaseDatabase.getInstance().getReference().child("Songs").child(String.valueOf(song.getIdSong()));
+                    s.addValueEventListener(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot snapshot) {
+                            MusicFile music = snapshot.getValue(MusicFile.class);
+                            if(music.getId() == song.getIdSong())
+                                listMusicTrend.add(music);
+
+                        }
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError error) {
+
+                        }
+                    });
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
         initView();
 
     }
