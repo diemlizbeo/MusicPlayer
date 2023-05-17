@@ -47,7 +47,6 @@ public class MusicService extends Service {
     @Nullable
     @Override
     public IBinder onBind(Intent intent) {
-        Log.e("Bind", "Method");
         return iBinder;
     }
     public  class MyBinder extends Binder{
@@ -65,19 +64,16 @@ public class MusicService extends Service {
         if(actionName != null){
             switch (actionName){
                 case "playPause":
-                    Toast.makeText(this, "PlayPause", Toast.LENGTH_SHORT).show();
                     if(actionPlaying != null){
                         actionPlaying.btPauseClicked();
                     }
                     break;
                 case "next":
-                    Toast.makeText(this, "Next", Toast.LENGTH_SHORT).show();
                     if(actionPlaying != null){
                         actionPlaying.btNextClicked();
                     }
                     break;
                 case "previous":
-                    Toast.makeText(this, "Previous", Toast.LENGTH_SHORT).show();
                     if(actionPlaying != null){
                         actionPlaying.btPreviousClicked();
                     }
@@ -153,18 +149,13 @@ public class MusicService extends Service {
         Intent intent = new Intent(this, PlayerActivity.class);
         PendingIntent contentIntent = PendingIntent.getActivity(this,
                 0,intent,0);
-        Intent prevIntent = new Intent(this, NotificationReceiver.class)
-                .setAction(ACTION_PREVIOUS);
-        PendingIntent prevPending = PendingIntent
-                .getBroadcast(this,0,prevIntent,PendingIntent.FLAG_UPDATE_CURRENT);
-        Intent pauseIntent = new Intent(this, NotificationReceiver.class)
-                .setAction(ACTION_PLAY);
-        PendingIntent pausePending = PendingIntent
-                .getBroadcast(this,0,pauseIntent,PendingIntent.FLAG_UPDATE_CURRENT);
-        Intent nextIntent = new Intent(this, NotificationReceiver.class)
-                .setAction(ACTION_NEXT);
-        PendingIntent nextPending = PendingIntent
-                .getBroadcast(this,0,nextIntent,PendingIntent.FLAG_UPDATE_CURRENT);
+        Intent prevIntent = new Intent(this, NotificationReceiver.class).setAction(ACTION_PREVIOUS);
+        PendingIntent prevPending = PendingIntent.getBroadcast(this,0,prevIntent,PendingIntent.FLAG_UPDATE_CURRENT);
+        Intent pauseIntent = new Intent(this, NotificationReceiver.class).setAction(ACTION_PLAY);
+        PendingIntent pausePending = PendingIntent.getBroadcast(this,0,pauseIntent,PendingIntent.FLAG_UPDATE_CURRENT);
+        Intent nextIntent = new Intent(this, NotificationReceiver.class).setAction(ACTION_NEXT);
+        PendingIntent nextPending = PendingIntent.getBroadcast(this,0,nextIntent,PendingIntent.FLAG_UPDATE_CURRENT);
+
         byte[] picture = null;
         picture = getAlbumArt(musicFiles.get(position).getPath());
         Bitmap thumb = null;

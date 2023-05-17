@@ -90,7 +90,7 @@ public class PlayerActivity extends AppCompatActivity implements  ActionPlayingI
         }
 
 
-        getIntentMethod();
+        getIntentList();
         seekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
@@ -176,10 +176,7 @@ public class PlayerActivity extends AppCompatActivity implements  ActionPlayingI
         });
    }
 
-    private void setFulScreen() {
-        requestWindowFeature(Window.FEATURE_NO_TITLE);
-        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,WindowManager.LayoutParams.FLAG_FULLSCREEN);
-    }
+
 
     private void initView() {
         back = findViewById(R.id.back);
@@ -386,7 +383,7 @@ public class PlayerActivity extends AppCompatActivity implements  ActionPlayingI
         else return totalOut;
     }
 
-    private void getIntentMethod() {
+    private void getIntentList() {
         position = getIntent().getIntExtra("position",-1);
         String sender = getIntent().getStringExtra("sender");
         if(sender != null && sender.equals("albumDetails")){
@@ -427,10 +424,8 @@ public class PlayerActivity extends AppCompatActivity implements  ActionPlayingI
             duration_total.setText(formattedTime(durationTotal));
             byte[] img = retriever.getEmbeddedPicture();
             Bitmap bitmap ;
-
             if(img != null){
                 Glide.with(this).asBitmap().load(img).into(image);
-
                 bitmap = BitmapFactory.decodeByteArray(img,0,img.length);
                 ImgAnimation(this, image, bitmap);
             }else{
