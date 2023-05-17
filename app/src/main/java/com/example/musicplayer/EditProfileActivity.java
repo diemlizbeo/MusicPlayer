@@ -228,8 +228,6 @@ public class EditProfileActivity extends AppCompatActivity {
 
         if (resultCode == RESULT_OK && requestCode == REQUESCODE && data != null ) {
 
-            // the user has successfully picked an image
-            // we need to save its reference to a Uri variable
             mImageUri = data.getData() ;
             image_profile.setImageURI(mImageUri);
             uploadImage();

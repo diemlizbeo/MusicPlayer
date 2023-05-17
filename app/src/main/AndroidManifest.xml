@@ -63,9 +63,6 @@
             android:name=".ArtistDetailActivity"
             android:exported="false" />
         <activity
-            android:name=".DrawerActivity"
-            android:exported="false" />
-        <activity
             android:name=".WelcomeActivity"
             android:exported="false" />
         <activity
@@ -73,9 +70,6 @@
             android:exported="false" />
         <activity
             android:name=".RegisterActivity"
-            android:exported="false" />
-        <activity
-            android:name=".MainActivity"
             android:exported="false" />
         <activity
             android:name=".PlayerActivity"

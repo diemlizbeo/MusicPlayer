@@ -15,6 +15,7 @@ import static com.example.musicplayer.adapter.AlbumOnlineDetailAdapter.listAlbum
 import static com.example.musicplayer.adapter.ArtistDetailAdapter.listArtist;
 import static com.example.musicplayer.adapter.ArtistOnlineDetailAdapter.listArtistOnline;
 import static com.example.musicplayer.adapter.MusicAdapter.listFile;
+import static com.example.musicplayer.adapter.MusicOnlineAdapter.listFileOnline;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -173,12 +174,7 @@ public class PlayerActivity extends AppCompatActivity implements  ActionPlayingI
                 onBackPressed();
             }
         });
-
-//        updateSeekBar.start();
-        // change color of seek-bar
-//        seekBar.getProgressDrawable().setColorFilter(getResources().getColor(R.color.blue), PorterDuff.Mode.MULTIPLY);
-//        seekBar.getThumb().setColorFilter(getResources().getColor(R.color.pink), PorterDuff.Mode.SRC_IN);
-    }
+   }
 
     private void setFulScreen() {
         requestWindowFeature(Window.FEATURE_NO_TITLE);
@@ -398,7 +394,7 @@ public class PlayerActivity extends AppCompatActivity implements  ActionPlayingI
         } else if (sender != null && sender.equals("artistDetails")){
             listSongs = listArtist;
         }else if (sender != null && sender.equals("musicOnline")){
-            listSongs = listMusicOnline;
+            listSongs = listFileOnline;
         }else if (sender != null && sender.equals("musicTrend")){
             listSongs = listMusicTrend;
         }else if(sender != null && sender.equals("albumOnlineDetails")){
@@ -407,7 +403,7 @@ public class PlayerActivity extends AppCompatActivity implements  ActionPlayingI
             listSongs = listArtistOnline;
         }
         else{
-            listSongs = musicFiles;
+            listSongs = listFile;
         }
         if(listSongs != null){
             btPause.setBackgroundResource(R.drawable.ic_pause);
@@ -415,15 +411,6 @@ public class PlayerActivity extends AppCompatActivity implements  ActionPlayingI
 
 
         }
-
-//        if(musicService != null){
-//            musicService.stop();
-//            musicService.release();
-////            musicService.createMediaPlayer(position);
-////            musicService.start();
-//        }
-//        musicService.createMediaPlayer(position);
-//        musicService.start();
 
         Intent intent = new Intent(this, MusicService.class);
         intent.putExtra("servicePosition", position);
@@ -446,25 +433,6 @@ public class PlayerActivity extends AppCompatActivity implements  ActionPlayingI
 
                 bitmap = BitmapFactory.decodeByteArray(img,0,img.length);
                 ImgAnimation(this, image, bitmap);
-//                Palette.from(bitmap).generate(new Palette.PaletteAsyncListener() {
-//                    @Override
-//                    public void onGenerated(@Nullable Palette palette) {
-//                        Palette.Swatch swatch = palette.getDominantSwatch();
-//                        if(swatch != null){
-////                            ImageView gradient = findViewById(R.id.img);
-////                            LinearLayout container = findViewById(R.id.linearLayout);
-////                            gradient.setBackgroundResource(R.drawable.gradient_bg);
-////                            container.setBackgroundResource(R.drawable.player_bg);
-////                            GradientDrawable drawable = new GradientDrawable(GradientDrawable.Orientation.BOTTOM_TOP,
-////                                    new int[]{0xff000000, 0x00000000});
-////                            gradient.setBackground(drawable);
-////                            GradientDrawable drawableBg = new GradientDrawable(GradientDrawable.Orientation.BOTTOM_TOP,
-////                                    new int[]{0xffffffff, 0xffffffff});
-////                            container.setBackground(drawableBg);
-//                            singer.setTextColor(Color.GRAY);
-//                        }
-//                    }
-//                });
             }else{
                 Glide.with(this).asBitmap().load(R.drawable.music_player).into(image);
 
@@ -481,7 +449,6 @@ public class PlayerActivity extends AppCompatActivity implements  ActionPlayingI
         aniOut.setAnimationListener(new Animation.AnimationListener() {
             @Override
             public void onAnimationStart(Animation animation) {
-
             }
 
             @Override
@@ -523,19 +490,6 @@ public class PlayerActivity extends AppCompatActivity implements  ActionPlayingI
         return super.onOptionsItemSelected(item);
     }
 
-//    @Override
-//    public void onCompletion(MediaPlayer mp) {
-//        btNextClicked();
-//        if(musicService != null){
-//            musicService.createMediaPlayer(position);
-//
-////            /////////////
-//            btPause.setBackgroundResource(R.drawable.ic_pause);
-//            musicService.start();
-//            musicService.onCompleted();
-//        }
-//
-//    }
 
     @Override
     public void onServiceConnected(ComponentName name, IBinder service) {

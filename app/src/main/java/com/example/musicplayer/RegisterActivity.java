@@ -3,38 +3,33 @@ package com.example.musicplayer;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
 
-import android.app.Activity;
 import android.app.ProgressDialog;
+import android.content.ContentResolver;
 import android.content.Intent;
-import android.content.pm.PackageManager;
 import android.net.Uri;
-import android.os.Build;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
+import android.webkit.MimeTypeMap;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.musicplayer.database.DatabaseHelper;
+import com.google.android.gms.tasks.Continuation;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.auth.UserProfileChangeRequest;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
-import com.google.firebase.storage.UploadTask;
+import com.google.firebase.storage.StorageTask;
 import com.karumi.dexter.Dexter;
 import com.karumi.dexter.PermissionToken;
 import com.karumi.dexter.listener.PermissionDeniedResponse;
@@ -54,10 +49,11 @@ public class RegisterActivity extends AppCompatActivity {
     private FirebaseAuth auth;
     private DatabaseReference reference ;
     private ProgressDialog pd;
-
+    private StorageTask uploadTask;
+    private StorageReference storageRef;
     private static int REQUESCODE = 1 ;
 
-
+    private String Stringimg;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -73,6 +69,7 @@ public class RegisterActivity extends AppCompatActivity {
         btSignUp = findViewById(R.id.btSignUp);
         tvLogin = findViewById(R.id.tvLogin);
         imgAvt = findViewById(R.id.imgAvt);
+        storageRef = FirebaseStorage.getInstance().getReference("uploads");
 
 
         tvLogin.setOnClickListener(new View.OnClickListener() {
@@ -114,7 +111,9 @@ public class RegisterActivity extends AppCompatActivity {
                                 hashMap.put("username", username.toLowerCase());
                                 hashMap.put("fullname", fullname);
                                 hashMap.put("bio", "");
-                                hashMap.put("imageurl", "default");
+                                hashMap.put("imageurl", "");
+
+
 
                                 reference.setValue(hashMap).addOnCompleteListener(new OnCompleteListener<Void>() {
                                     @Override
@@ -127,6 +126,48 @@ public class RegisterActivity extends AppCompatActivity {
                                         }
                                     }
                                 });
+                                if (pickedImgUri != null) {
+                                    final StorageReference filereference = storageRef.child(System.currentTimeMillis() + "." + getFileExtension(pickedImgUri));
+
+                                    uploadTask = filereference.putFile(pickedImgUri);
+                                    uploadTask.continueWithTask(new Continuation() {
+                                        @Override
+                                        public Object then(@NonNull Task task) throws Exception {
+                                            if (!task.isSuccessful()) {
+                                                throw task.getException();
+                                            }
+
+                                            return filereference.getDownloadUrl();
+                                        }
+                                    }).addOnCompleteListener(new OnCompleteListener() {
+                                        @Override
+                                        public void onComplete(@NonNull Task task) {
+                                            if (task.isSuccessful()) {
+                                                Uri downloadUri = (Uri) task.getResult();
+                                                String myUrl = downloadUri.toString();
+
+                                                reference = FirebaseDatabase.getInstance().getReference().child("Users").child(userid);
+
+                                                HashMap<String, Object> hashMap = new HashMap<>();
+                                                hashMap.put("imageurl", "" + myUrl);
+
+                                                reference.updateChildren(hashMap);
+                                                pd.dismiss();
+                                            } else {
+                                                Toast.makeText(RegisterActivity.this, "Failed!", Toast.LENGTH_SHORT).show();
+                                            }
+                                        }
+
+
+                                    }).addOnFailureListener(new OnFailureListener() {
+                                        @Override
+                                        public void onFailure(@NonNull Exception e) {
+                                            Toast.makeText(RegisterActivity.this, e.getMessage(), Toast.LENGTH_SHORT).show();
+                                        }
+                                    });
+                                } else {
+                                    Toast.makeText(RegisterActivity.this, "No image selected", Toast.LENGTH_SHORT).show();
+                                }
                             }else{
                                 pd.dismiss();
                                 Toast.makeText(RegisterActivity.this, "Register fail", Toast.LENGTH_SHORT).show();
@@ -170,6 +211,19 @@ public class RegisterActivity extends AppCompatActivity {
                     }
                 }).check();
     }
+    private void uploadImage() {
+        final ProgressDialog pd = new ProgressDialog(this);
+        pd.setMessage("Uploading");
+        pd.show();
+
+
+    }
+    private String getFileExtension(Uri uri) {
+        ContentResolver contentResolver = getContentResolver();
+        MimeTypeMap mimeTypeMap = MimeTypeMap.getSingleton();
+
+        return mimeTypeMap.getExtensionFromMimeType(contentResolver.getType(uri));
+    }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
@@ -177,8 +231,6 @@ public class RegisterActivity extends AppCompatActivity {
 
         if (resultCode == RESULT_OK && requestCode == REQUESCODE && data != null ) {
 
-            // the user has successfully picked an image
-            // we need to save its reference to a Uri variable
             pickedImgUri = data.getData() ;
             imgAvt.setImageURI(pickedImgUri);
         }

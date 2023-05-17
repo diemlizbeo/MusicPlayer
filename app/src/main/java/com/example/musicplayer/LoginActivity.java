@@ -4,8 +4,6 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.app.Activity;
-import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
@@ -13,14 +11,11 @@ import android.text.TextUtils;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.musicplayer.database.DatabaseHelper;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.firebase.FirebaseApp;
@@ -164,18 +159,6 @@ public class LoginActivity extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-//        if(requestCode == REQUEST_CODE_REGISTER) {
-//            if(resultCode == Activity.RESULT_OK) {
-//                // Nhận dữ liệu từ Intent trả về
-//                final String email = data.getStringExtra("email");
-//                final String password = data.getStringExtra("pass");
-//                //Set lại giá trị cho txtEmail and password
-//                edemail.setText(email);
-//                edpassword.setText(password);
-//            } else {
-//                // DetailActivity không thành công, không có data trả về.
-//            }
-//        }
 
     }
 }

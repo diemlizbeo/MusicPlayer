@@ -32,16 +32,12 @@ import java.util.List;
 
 public class IdolActivity extends AppCompatActivity {
 
-    Uri imageUri;
-    String myUrl;
-    StorageTask uploadTask;
-    StorageReference storageReference;
+
     private FirebaseUser firebaseUser;
 
     private ArrayList<Idol> idolList;
     RecyclerView recyclerView;
     private IdolAdapter idolAdapter;
-    SearchView searchView;
     private TextView tvAdd;
     private ImageView back;
 

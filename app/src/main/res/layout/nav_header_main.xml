@@ -9,13 +9,12 @@
     android:theme="@style/ThemeOverlay.AppCompat.Dark">
 
     <LinearLayout
-        android:layout_marginLeft="10dp"
         android:orientation="vertical"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content">
 
         <de.hdodenhof.circleimageview.CircleImageView
-            android:src="@drawable/nana"
+            android:src="@drawable/avt"
             android:id="@+id/imgAvt"
             android:layout_gravity="center_horizontal"
 
@@ -32,8 +31,7 @@
             android:textSize="18dp"
             android:layout_gravity="center_horizontal"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Diem Diem" />
+            android:layout_height="wrap_content" />
         <TextView
             android:id="@+id/tvEmail"
             android:layout_marginLeft="5dp"
@@ -41,8 +39,7 @@
             android:textSize="17dp"
             android:layout_gravity="center_horizontal"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="nguyendiemdiem2k1@gmail.com" />
+            android:layout_height="wrap_content"/>
     </LinearLayout>
 
 

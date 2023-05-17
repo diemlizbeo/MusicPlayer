@@ -49,7 +49,6 @@ public class MyProfileActivity extends AppCompatActivity {
         image_profile = findViewById(R.id.profileImg);
         back = findViewById(R.id.back);
 
-        Toast.makeText(MyProfileActivity.this, "!!!!", Toast.LENGTH_SHORT).show();
         firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
         storageRef = FirebaseStorage.getInstance().getReference("uploads");
 

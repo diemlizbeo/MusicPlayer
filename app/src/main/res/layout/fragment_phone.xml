@@ -9,21 +9,28 @@
     android:layout_gravity="center"
     android:theme="@style/Theme.MaterialComponents.DayNight.NoActionBar">
 
-    <com.google.android.material.tabs.TabLayout
-        android:id="@+id/tabLayout"
-        android:background="@color/blue66B1D1"
-        app:tabIndicator="@drawable/tab_indicator"
-        app:tabIndicatorGravity="center"
-        app:tabIndicatorFullWidth="true"
-        app:tabIndicatorHeight="40dp"
-        app:tabIndicatorColor="@color/pinkF6BBE2"
-        app:tabTextColor="@color/white"
+    <androidx.cardview.widget.CardView
+        android:id="@+id/card"
+        app:cardCornerRadius="20dp"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+        android:layout_height="wrap_content">
+        <com.google.android.material.tabs.TabLayout
+            android:id="@+id/tabLayout"
+            android:background="@color/blue66B1D1"
+            app:tabIndicator="@drawable/tab_indicator"
+            app:tabIndicatorGravity="center"
+            app:tabIndicatorFullWidth="true"
+            app:tabIndicatorHeight="40dp"
+            app:tabIndicatorColor="@color/pinkF6BBE2"
+            app:tabTextColor="@color/white"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+    </androidx.cardview.widget.CardView>
+
 
     <androidx.viewpager.widget.ViewPager
         android:id="@+id/viewPager"
-        android:layout_below="@+id/tabLayout"
+        android:layout_below="@+id/card"
         android:layout_alignParentBottom="true"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>

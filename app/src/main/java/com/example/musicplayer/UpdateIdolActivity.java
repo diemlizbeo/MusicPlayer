@@ -226,8 +226,6 @@ public class UpdateIdolActivity extends AppCompatActivity {
 
         if (resultCode == RESULT_OK && requestCode == REQUESCODE && data != null ) {
 
-            // the user has successfully picked an image
-            // we need to save its reference to a Uri variable
             imgUri = data.getData() ;
             img.setImageURI(imgUri);
             uploadImage();

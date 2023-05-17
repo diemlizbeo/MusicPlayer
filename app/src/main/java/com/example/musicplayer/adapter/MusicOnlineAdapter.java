@@ -28,11 +28,11 @@ public class MusicOnlineAdapter extends RecyclerView.Adapter<MusicOnlineAdapter.
 
 
     private Context context;
-    public static ArrayList<MusicFile> listFile;
+    public static ArrayList<MusicFile> listFileOnline;
 
     public MusicOnlineAdapter(Context context, ArrayList<MusicFile> listFile) {
         this.context = context;
-        this.listFile = listFile;
+        this.listFileOnline = listFile;
     }
 
     @NonNull
@@ -45,9 +45,9 @@ public class MusicOnlineAdapter extends RecyclerView.Adapter<MusicOnlineAdapter.
     @Override
     public void onBindViewHolder(@NonNull MusicViewHolder holder, @SuppressLint("RecyclerView") int position) {
 
-        holder.tvName.setText(listFile.get(position).getTitle());
-        holder.tvSinger.setText(listFile.get(position).getArtist());
-        byte[] image = getAlbumArt(listFile.get(position).getPath());
+        holder.tvName.setText(listFileOnline.get(position).getTitle());
+        holder.tvSinger.setText(listFileOnline.get(position).getArtist());
+        byte[] image = getAlbumArt(listFileOnline.get(position).getPath());
         if(image != null){
             Glide.with(context).asBitmap().load(image).into(holder.img);
         }else{
@@ -96,7 +96,7 @@ public class MusicOnlineAdapter extends RecyclerView.Adapter<MusicOnlineAdapter.
 
     @Override
     public int getItemCount() {
-        return listFile.size();
+        return listFileOnline.size();
     }
 
 
@@ -129,8 +129,8 @@ public class MusicOnlineAdapter extends RecyclerView.Adapter<MusicOnlineAdapter.
     }
 
     public void updateList(ArrayList<MusicFile> musicFileArrayList){
-        listFile = new ArrayList<>();
-        listFile.addAll(musicFileArrayList);
+        listFileOnline = new ArrayList<>();
+        listFileOnline.addAll(musicFileArrayList);
         notifyDataSetChanged();
     }
 }

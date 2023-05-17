@@ -109,22 +109,6 @@ public class IdolAdapter extends RecyclerView.Adapter<IdolAdapter.IdolViewHolder
         listIdol.addAll(idolArrayList);
         notifyDataSetChanged();
     }
-    private void publisherInfor(final ImageView image_profile , final TextView username , final TextView publisher , String userid) {
-        DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Users").child(userid);
 
-        reference.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                User user = dataSnapshot.getValue(User.class);
-                Picasso.get().load(user.getImageurl()).placeholder(R.drawable.avt).into(image_profile);
-                username.setText(user.getUsername());
-                publisher.setText(user.getFullname());
-            }
 
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-
-            }
-        });
-    }
 }

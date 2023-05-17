@@ -173,11 +173,7 @@ public class MusicService extends Service {
         }else{
             thumb = BitmapFactory.decodeResource(getResources(), R.drawable.nana);
         }
-//        MediaSessionCompat mediaSession = new MediaSessionCompat(getApplicationContext(), "MUSICPLAYER" );
-//        MediaSessionCompat.Token token = mediaSession.getSessionToken();
-//        NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(this, CHANNEL_ID_2);
-//        Notification notification = notificationBuilder.setOngoing(true)
-        Notification notification = new NotificationCompat.Builder(this, CHANNEL_ID_2)
+       Notification notification = new NotificationCompat.Builder(this, CHANNEL_ID_2)
                 .setSmallIcon(R.drawable.nana)
                 .setLargeIcon(thumb)
                 .setContentTitle(musicFiles.get(position).getTitle())
@@ -185,10 +181,6 @@ public class MusicService extends Service {
                 .addAction(R.drawable.ic_previous, "Previous", prevPending)
                 .addAction(R.drawable.ic_pause, btPause, pausePending)
                 .addAction(R.drawable.ic_next, "Next", nextPending)
-//                .setStyle(new androidx.media.app.NotificationCompat.MediaStyle()
-//                        .setShowActionsInCompactView(0, 1, 2)
-//                        .setMediaSession(token))
-//                .setStyle(new androidx.media.app.NotificationCompat.MediaStyle().setMediaSession(mediaSessionCompat.getSessionToken()))
                 .setPriority(NotificationCompat.PRIORITY_HIGH)
                 .setOnlyAlertOnce(true)
                 .build();

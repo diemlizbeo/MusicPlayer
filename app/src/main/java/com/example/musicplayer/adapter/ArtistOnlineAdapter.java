@@ -37,7 +37,7 @@ public class ArtistOnlineAdapter extends RecyclerView.Adapter<ArtistOnlineAdapte
     @NonNull
     @Override
     public ArtistViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        view = LayoutInflater.from(context).inflate(R.layout.artist_item,parent,false);
+        view = LayoutInflater.from(context).inflate(R.layout.artist_online_item,parent,false);
         return new ArtistViewHolder(view);
     }
 

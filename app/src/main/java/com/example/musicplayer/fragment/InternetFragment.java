@@ -48,8 +48,7 @@ import com.google.firebase.database.ValueEventListener;
 import com.squareup.picasso.Picasso;
 
 public class InternetFragment extends Fragment {
-//    private ViewPager viewPager;
-//    private TabLayout tabLayout;
+
     private TextView tvHello, tvGetTrend, tvGetAll, tvgetAlbum, tvgetArtist;
     private ImageView imgHello;
     private MusicOnlineMainAdapter musicAdapter;
@@ -68,7 +67,6 @@ public class InternetFragment extends Fragment {
         initView(view);
         recyclerViewAll.setHasFixedSize(true);
         if (!(listMusicOnline.size() < 1)) {
-            Toast.makeText(getContext(), String.valueOf(listMusicOnline.size()), Toast.LENGTH_SHORT).show();
             musicAdapter = new MusicOnlineMainAdapter(getContext(), listMusicOnline);
             recyclerViewAll.setAdapter(musicAdapter);
             recyclerViewAll.setLayoutManager(new LinearLayoutManager(getContext(), RecyclerView.HORIZONTAL, false));
@@ -76,7 +74,6 @@ public class InternetFragment extends Fragment {
         }
         recyclerViewTrend.setHasFixedSize(true);
         if (!(listMusicTrend.size() < 1)) {
-            Toast.makeText(getContext(), String.valueOf(listMusicTrend.size()), Toast.LENGTH_SHORT).show();
             musicAdapterTrend = new MusicTrendAdapter(getContext(), listMusicTrend);
             recyclerViewTrend.setAdapter(musicAdapterTrend);
             recyclerViewTrend.setLayoutManager(new LinearLayoutManager(getContext(), RecyclerView.HORIZONTAL, false));
@@ -131,6 +128,7 @@ public class InternetFragment extends Fragment {
     private void initView(View view) {
 
         tvHello = view.findViewById(R.id.tvHello);
+        imgHello = view.findViewById(R.id.imgHello);
         tvGetTrend = view.findViewById(R.id.tvGetTrend);
         tvGetAll = view.findViewById(R.id.tvGetAll);
         tvgetAlbum = view.findViewById(R.id.tvGetAlbum);
@@ -146,6 +144,8 @@ public class InternetFragment extends Fragment {
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 User user = dataSnapshot.getValue(User.class);
                 tvHello.setText("Hey " + user.getUsername() + " !");
+                Picasso.get().load(user.getImageurl()).placeholder(R.drawable.avt).into(imgHello);
+
 
             }
 

@@ -72,7 +72,6 @@ import java.util.List;
 
 public class HomeActivity extends AppCompatActivity {
     private ViewPager viewPager;
-    //    private TabLayout tabLayout;
     private BottomNavigationView bottomNavigationView;
     private SearchView searchView;
     private StorageReference storageRef;
@@ -203,7 +202,6 @@ public class HomeActivity extends AppCompatActivity {
     }
     private void initView() {
         viewPager = findViewById(R.id.viewPager);
-//        tabLayout = findViewById(R.id.tabLayout);
         searchView = findViewById(R.id.searchView);
         bottomNavigationView = findViewById(R.id.bottomNavigation);
         FragmentManager manager = getSupportFragmentManager();
@@ -228,7 +226,6 @@ public class HomeActivity extends AppCompatActivity {
                 return true;
             }
         });
-//        tabLayout.setupWithViewPager(viewPager);
 
         viewPager.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
@@ -361,8 +358,6 @@ public class HomeActivity extends AppCompatActivity {
                     artists.add(musicFile);
                     arti.add(artist);
                 }
-
-
             }
             cursor.close();
         }
