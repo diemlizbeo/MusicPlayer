@@ -40,9 +40,10 @@ public class IdolFragment extends Fragment {
 
     private ArrayList<Idol> idolList;
     RecyclerView recyclerView;
-    private IdolAdapter idolAdapter;
-    SearchView searchView;
+    public static IdolAdapter idolAdapter;
     private TextView tvAdd;
+    private SearchView searchView;
+
 
     @SuppressLint("MissingInflatedId")
     @Override
@@ -52,6 +53,7 @@ public class IdolFragment extends Fragment {
         View view =  inflater.inflate(R.layout.fragment_idol, container, false);
         recyclerView = view.findViewById(R.id.recycleView);
         tvAdd = view.findViewById(R.id.tvAdd);
+        searchView = view.findViewById(R.id.searchView);
 
 
         recyclerView.setHasFixedSize(true);
@@ -85,7 +87,26 @@ public class IdolFragment extends Fragment {
         idolAdapter = new IdolAdapter(getContext() , idolList);
         recyclerView.setAdapter(idolAdapter);
 
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                return false;
+            }
 
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                ArrayList<Idol> filterList = new ArrayList<>();
+                for(Idol i : idolList){
+                    if((i.getName().toLowerCase().contains(newText.toLowerCase()))){
+                        filterList.add(i);
+                    }
+                }
+//                if (filterList.size() > 0)
+                IdolFragment.idolAdapter.updateList(filterList);
+                return false;
+            }
+
+        });
         tvAdd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

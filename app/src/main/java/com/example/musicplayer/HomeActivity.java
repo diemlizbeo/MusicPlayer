@@ -137,9 +137,7 @@ public class HomeActivity extends AppCompatActivity {
             }
         });
         showInforUser();
-        ActivityCompat.requestPermissions(HomeActivity.this,
-                permissions(),
-                1);
+        ActivityCompat.requestPermissions(HomeActivity.this,permissions(),1);
         firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
         DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Songs");
         reference.addValueEventListener(new ValueEventListener() {

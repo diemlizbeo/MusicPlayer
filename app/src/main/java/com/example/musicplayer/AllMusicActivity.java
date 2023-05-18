@@ -57,8 +57,8 @@ public class AllMusicActivity extends AppCompatActivity {
                         filterList.add(i);
                     }
                 }
-                if (filterList.size() > 0)
-                    AllMusicActivity.musicAdapter.updateList(filterList);
+//                if (filterList.size() > 0)
+                AllMusicActivity.musicAdapter.updateList(filterList);
                 return false;
             }
 

@@ -18,8 +18,7 @@
         <ImageView
             android:id="@+id/img"
             android:layout_width="match_parent"
-            android:layout_height="120dp"
-            android:src="@drawable/welcome_logo"/>
+            android:layout_height="120dp"/>
 
         <TextView
             android:id="@+id/tvName"
@@ -27,13 +26,11 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:singleLine="true"
-            android:text="name"
             android:textSize="16dp"
             android:textStyle="bold" />
 
         <TextView
             android:id="@+id/tvSinger"
-            android:text="Artist name"
             android:singleLine="true"
             android:textSize="16dp"
             android:textStyle="bold"

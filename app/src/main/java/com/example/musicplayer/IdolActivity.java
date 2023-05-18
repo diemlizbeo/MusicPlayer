@@ -1,5 +1,7 @@
 package com.example.musicplayer;
 
+import static com.example.musicplayer.HomeActivity.listMusicOnline;
+
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.SearchView;
@@ -16,6 +18,7 @@ import android.widget.TextView;
 
 import com.example.musicplayer.adapter.IdolAdapter;
 import com.example.musicplayer.model.Idol;
+import com.example.musicplayer.model.MusicFile;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -35,11 +38,12 @@ public class IdolActivity extends AppCompatActivity {
 
     private FirebaseUser firebaseUser;
 
-    private ArrayList<Idol> idolList;
+    public static ArrayList<Idol> idolList;
     RecyclerView recyclerView;
-    private IdolAdapter idolAdapter;
+    public static IdolAdapter idolAdapter;
     private TextView tvAdd;
     private ImageView back;
+    private SearchView searchView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,6 +52,7 @@ public class IdolActivity extends AppCompatActivity {
         recyclerView =findViewById(R.id.recycleView);
         tvAdd = findViewById(R.id.tvAdd);
         back = findViewById(R.id.back);
+        searchView = findViewById(R.id.searchView);
 
         back.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -87,7 +92,26 @@ public class IdolActivity extends AppCompatActivity {
         idolAdapter = new IdolAdapter(getApplicationContext() , idolList);
         recyclerView.setAdapter(idolAdapter);
 
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                return false;
+            }
 
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                ArrayList<Idol> filterList = new ArrayList<>();
+                for(Idol i : idolList){
+                    if((i.getName().toLowerCase().contains(newText.toLowerCase()))){
+                        filterList.add(i);
+                    }
+                }
+//                if (filterList.size() > 0)
+                IdolActivity.idolAdapter.updateList(filterList);
+                return false;
+            }
+
+        });
         tvAdd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
