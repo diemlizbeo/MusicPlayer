@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="10dp"
+    android:background="@drawable/gradient_bg"
+    android:orientation="vertical"
+    tools:context=".server.ServerActivity">
+    <TextView
+        android:text="UPLOAD SONG TO FIREBASE"
+        android:textSize="20dp"
+        android:textStyle="bold"
+        android:gravity="center_horizontal"
+        android:id="@+id/txt"
+        android:textColor="@color/blue1B6DAC"
+        android:layout_width="match_parent"
+        android:layout_marginTop="20dp"
+        android:layout_height="wrap_content"/>
+
+
+
+
+    <LinearLayout
+        android:layout_marginTop="20dp"
+        android:id="@+id/linearLayout"
+        android:layout_below="@id/txt"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical" >
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Title:"
+            android:textColor="@color/colorPrimaryDark"
+            android:textSize="16dp"
+            android:textStyle="bold" />
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:textSize="16dp"
+            android:id="@+id/title"
+            android:textStyle="bold" />
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Album:"
+            android:textColor="@color/colorPrimaryDark"
+
+            android:textSize="16dp"
+
+            android:textStyle="bold"/>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+
+            android:textSize="16dp"
+
+            android:id="@+id/album"
+            android:textStyle="bold"/>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Artist:"
+            android:textColor="@color/colorPrimaryDark"
+
+            android:textSize="16dp"
+
+            android:textStyle="bold"/>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/artist"
+            android:textSize="16dp"
+            android:layout_marginLeft="20dp"
+
+            android:textStyle="bold"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Duration:"
+            android:textColor="@color/colorPrimaryDark"
+
+            android:textSize="16dp"
+
+            android:textStyle="bold"/>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/duration"
+            android:textSize="16dp"
+            android:layout_marginLeft="20dp"
+
+            android:textStyle="bold"/>
+
+        <ImageView
+            android:layout_marginTop="10dp"
+            android:layout_width="150dp"
+            android:layout_height="150dp"
+            android:id="@+id/imageview" />
+    </LinearLayout>
+    <EditText
+        android:id="@+id/edID"
+        android:hint="enter song ID"
+        android:layout_marginTop="20dp"
+        android:layout_below="@+id/linearLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+    <Button
+        android:id="@+id/btSelect"
+        android:text="Select file"
+        android:layout_alignParentEnd="true"
+        android:background="@color/blue"
+        android:layout_below="@id/edID"
+        android:layout_marginRight="10dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/buttonUpload"
+        android:layout_marginTop="20dp"
+        android:layout_below="@+id/btSelect"
+        android:background="@drawable/button"
+        android:onClick="uploadFileTofirebase"
+        android:text="upload"
+        android:textStyle="bold" />
+
+
+</RelativeLayout>
