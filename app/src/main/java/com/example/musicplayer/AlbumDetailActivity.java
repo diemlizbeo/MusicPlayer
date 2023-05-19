@@ -32,6 +32,7 @@ public class AlbumDetailActivity extends AppCompatActivity {
     private TextView tvnameAlbum;
     ArrayList<MusicFile> albumSongs = new ArrayList<>();
     AlbumDetailAdapter albumDetailAdapter;
+    private TextView slSong;
 
 
     @Override
@@ -41,6 +42,8 @@ public class AlbumDetailActivity extends AppCompatActivity {
         recyclerView = findViewById(R.id.recyclerView);
         imgAlbum = findViewById(R.id.imgAlbum);
         back = findViewById(R.id.back);
+        slSong = findViewById(R.id.slSong);
+
         tvnameAlbum = findViewById(R.id.nameAlbum);
         albumName = getIntent().getStringExtra("albumname");
         tvnameAlbum.setText(albumName);
@@ -51,6 +54,8 @@ public class AlbumDetailActivity extends AppCompatActivity {
                 j++;
             }
         }
+        slSong.setText(albumSongs.size() + " bài hát");
+
         byte[] img = getAlbumArt(albumSongs.get(0).getPath());
         if(img != null){
             Glide.with(this).load(img).into(imgAlbum);

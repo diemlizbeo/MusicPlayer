@@ -129,7 +129,11 @@ public class AddIdolActivity extends AppCompatActivity {
                         @Override
                         public void onComplete(@NonNull Task task) {
                             if(task.isSuccessful()){
-                                if(edname.getText().toString() != null && eddob.getText().toString() != null && edcountry.getText().toString() != null && edlike.getText().toString() != null){
+                                if((edname.getText().toString().equals("") || eddob.getText().toString().equals("") || edcountry.getText().toString().equals("") || edlike.getText().toString().equals(""))){
+
+                                    Toast.makeText(AddIdolActivity.this, "Please enter data", Toast.LENGTH_SHORT).show();
+
+                                }else {
                                     Uri downloadUri = (Uri) task.getResult();
                                     myUrl = downloadUri.toString();
                                     DatabaseReference  reference = FirebaseDatabase.getInstance().getReference("Idols");
@@ -148,8 +152,6 @@ public class AddIdolActivity extends AppCompatActivity {
 
                                     startActivity(new Intent(AddIdolActivity.this , IdolActivity.class));
                                     finish();
-                                }else {
-                                    Toast.makeText(AddIdolActivity.this, "Please enter data", Toast.LENGTH_SHORT).show();
                                 }
 
                             } else {

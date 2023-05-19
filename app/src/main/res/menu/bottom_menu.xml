@@ -7,7 +7,7 @@
     <item
         android:id="@+id/mPhone"
         android:icon="@drawable/ic_phone"
-        android:title="Local" />
+        android:title="Offline" />
     <item
         android:id="@+id/mAccount"
         android:icon="@drawable/ic_account"

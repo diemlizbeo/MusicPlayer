@@ -30,6 +30,8 @@ public class ArtistDetailActivity extends AppCompatActivity {
     private String artistName;
     private TextView tvnameArtist;
     private ImageView back;
+    private TextView slSong;
+
     ArrayList<MusicFile> artistSongs = new ArrayList<>();
     ArtistDetailAdapter artistDetailAdapter;
 
@@ -42,6 +44,8 @@ public class ArtistDetailActivity extends AppCompatActivity {
         imgAlbum = findViewById(R.id.imgAlbum);
         tvnameArtist = findViewById(R.id.nameArtist);
         back = findViewById(R.id.back);
+        slSong = findViewById(R.id.slSong);
+
         artistName = getIntent().getStringExtra("artistname");
         tvnameArtist.setText(artistName);
         int j=0;
@@ -51,6 +55,8 @@ public class ArtistDetailActivity extends AppCompatActivity {
                 j++;
             }
         }
+        slSong.setText(artistSongs.size() + " bài hát");
+
         byte[] img = getAlbumArt(artistSongs.get(0).getPath());
         if(img != null){
             Glide.with(this).load(img).into(imgAlbum);

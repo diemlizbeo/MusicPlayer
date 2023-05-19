@@ -48,7 +48,7 @@ public class ArtistOnlineAdapter extends RecyclerView.Adapter<ArtistOnlineAdapte
         if(image != null){
             Glide.with(context).asBitmap().load(image).into(holder.imgArtist);
         }else{
-            Glide.with(context).load(R.drawable.welcome_logo).into(holder.imgArtist);
+            Glide.with(context).load(R.drawable.dia).into(holder.imgArtist);
         }
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {

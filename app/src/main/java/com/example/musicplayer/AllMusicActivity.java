@@ -36,7 +36,6 @@ public class AllMusicActivity extends AppCompatActivity {
         back = findViewById(R.id.back);
         recyclerView.setHasFixedSize(true);
         if(!(listMusicOnline.size() < 1 )){
-            Toast.makeText(AllMusicActivity.this,String.valueOf(listMusicOnline.size()) , Toast.LENGTH_SHORT).show();
             musicAdapter = new MusicOnlineAdapter(AllMusicActivity.this, listMusicOnline);
             recyclerView.setAdapter(musicAdapter);
             recyclerView.setLayoutManager(new LinearLayoutManager(AllMusicActivity.this,RecyclerView.VERTICAL,false));

@@ -12,6 +12,7 @@ import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.musicplayer.adapter.AlbumOnlineAdapter;
@@ -31,7 +32,6 @@ public class ArtistOnlineActivity extends AppCompatActivity {
         back = findViewById(R.id.back);
         recyclerView.setHasFixedSize(true);
         if(!(listartistOnline.size() < 1 )){
-            Toast.makeText(ArtistOnlineActivity.this,String.valueOf(listartistOnline.size()) , Toast.LENGTH_SHORT).show();
             artistOnlineAdapter = new ArtistOnlineAdapter(ArtistOnlineActivity.this, listartistOnline);
             recyclerView.setAdapter(artistOnlineAdapter);
             recyclerView.setLayoutManager(new GridLayoutManager(this,2));

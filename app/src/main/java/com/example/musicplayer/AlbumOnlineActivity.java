@@ -31,7 +31,6 @@ public class AlbumOnlineActivity extends AppCompatActivity {
         back = findViewById(R.id.back);
         recyclerView.setHasFixedSize(true);
         if(!(listalbumOnline.size() < 1 )){
-            Toast.makeText(AlbumOnlineActivity.this,String.valueOf(listalbumOnline.size()) , Toast.LENGTH_SHORT).show();
             albumOnlineAdapter = new AlbumOnlineAdapter(AlbumOnlineActivity.this, listalbumOnline);
             recyclerView.setAdapter(albumOnlineAdapter);
             recyclerView.setLayoutManager(new GridLayoutManager(this,2));

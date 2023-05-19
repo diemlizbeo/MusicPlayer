@@ -3,6 +3,7 @@ package com.example.musicplayer;
 
 import static com.example.musicplayer.HomeActivity.listMusicOnline;
 
+import android.annotation.SuppressLint;
 import android.media.MediaMetadataRetriever;
 import android.os.Bundle;
 import android.view.View;
@@ -30,8 +31,11 @@ public class AlbumOnlineDetailActivity extends AppCompatActivity {
     private TextView tvnameAlbum;
     ArrayList<MusicFile> albumSongs = new ArrayList<>();
     AlbumOnlineDetailAdapter albumDetailAdapter;
+    private TextView slSong;
 
 
+
+    @SuppressLint("MissingInflatedId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -39,6 +43,7 @@ public class AlbumOnlineDetailActivity extends AppCompatActivity {
         recyclerView = findViewById(R.id.recyclerView);
         imgAlbum = findViewById(R.id.imgAlbum);
         back = findViewById(R.id.back);
+        slSong = findViewById(R.id.slSong);
         tvnameAlbum = findViewById(R.id.nameAlbum);
         albumName = getIntent().getStringExtra("albumonlinename");
         tvnameAlbum.setText(albumName);
@@ -49,6 +54,7 @@ public class AlbumOnlineDetailActivity extends AppCompatActivity {
                 j++;
             }
         }
+        slSong.setText(albumSongs.size() + " bài hát");
         byte[] img = getAlbumArt(albumSongs.get(0).getPath());
         if(img != null){
             Glide.with(this).load(img).into(imgAlbum);

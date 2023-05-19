@@ -392,6 +392,8 @@ public class PlayerActivity extends AppCompatActivity implements  ActionPlayingI
             listSongs = listArtist;
         }else if (sender != null && sender.equals("musicOnline")){
             listSongs = listFileOnline;
+        }else if (sender != null && sender.equals("musicOnlineMain")){
+            listSongs = listMusicOnline;
         }else if (sender != null && sender.equals("musicTrend")){
             listSongs = listMusicTrend;
         }else if(sender != null && sender.equals("albumOnlineDetails")){

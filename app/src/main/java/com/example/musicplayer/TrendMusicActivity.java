@@ -29,7 +29,6 @@ public class TrendMusicActivity extends AppCompatActivity {
         back = findViewById(R.id.back);
         recyclerView.setHasFixedSize(true);
         if(!(listMusicTrend.size() < 1 )){
-            Toast.makeText(TrendMusicActivity.this,String.valueOf(listMusicTrend.size()) , Toast.LENGTH_SHORT).show();
             musicAdapter = new MusicOnlineAdapter(TrendMusicActivity.this, listMusicTrend);
             recyclerView.setAdapter(musicAdapter);
             recyclerView.setLayoutManager(new LinearLayoutManager(TrendMusicActivity.this,RecyclerView.VERTICAL,false));

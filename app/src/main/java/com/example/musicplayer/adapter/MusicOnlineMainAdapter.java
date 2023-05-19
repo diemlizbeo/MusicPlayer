@@ -58,7 +58,7 @@ public class MusicOnlineMainAdapter extends RecyclerView.Adapter<MusicOnlineMain
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(context, PlayerActivity.class);
-                intent.putExtra("sender", "musicOnline");
+                intent.putExtra("sender", "musicOnlineMain");
                 intent.putExtra("position", position);
                 context.startActivity(intent);
             }

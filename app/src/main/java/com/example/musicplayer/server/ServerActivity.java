@@ -74,22 +74,18 @@ public class ServerActivity extends AppCompatActivity {
             public void onClick(View view) {
                 Intent i = new Intent(Intent.ACTION_GET_CONTENT);
                 i.setType("audio/*");
-                startActivityForResult(i,101);
+                startActivityForResult(i,1000);
             }
         });
 
-
-
-
     }
-
 
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        if(requestCode == 101 && resultCode  == RESULT_OK && data.getData() != null){
+        if(requestCode == 1000 && resultCode  == RESULT_OK && data.getData() != null){
 
             audioUri = data.getData();
             metadataRetriever.setDataSource(this,audioUri);
@@ -98,49 +94,20 @@ public class ServerActivity extends AppCompatActivity {
                 Bitmap bitmap = BitmapFactory.decodeByteArray(art,0,art.length);
                 album_art.setImageBitmap(bitmap);
             }
-
-            tvalbum.setText(metadataRetriever.extractMetadata(MediaMetadataRetriever.METADATA_KEY_ALBUM));
-            tvartist.setText(metadataRetriever.extractMetadata(MediaMetadataRetriever.METADATA_KEY_ARTIST));
-            tvdurations.setText(metadataRetriever.extractMetadata(MediaMetadataRetriever.METADATA_KEY_DURATION));
-            tvtitle.setText(metadataRetriever.extractMetadata(MediaMetadataRetriever.METADATA_KEY_TITLE));
-
-            artist = metadataRetriever.extractMetadata(MediaMetadataRetriever.METADATA_KEY_ARTIST);
-            title = metadataRetriever.extractMetadata(MediaMetadataRetriever.METADATA_KEY_TITLE);
-            duration = metadataRetriever.extractMetadata(MediaMetadataRetriever.METADATA_KEY_DURATION);
             album = metadataRetriever.extractMetadata(MediaMetadataRetriever.METADATA_KEY_ALBUM);
+            artist = metadataRetriever.extractMetadata(MediaMetadataRetriever.METADATA_KEY_ARTIST);
+            duration = metadataRetriever.extractMetadata(MediaMetadataRetriever.METADATA_KEY_DURATION);
+            title = metadataRetriever.extractMetadata(MediaMetadataRetriever.METADATA_KEY_TITLE);
 
-
+            tvalbum.setText(album);
+            tvartist.setText(artist);
+            tvdurations.setText(duration);
+            tvtitle.setText(title);
         }
-
 
     }
 
-    @SuppressLint("Range")
-    private  String getFileName(Uri uri){
-
-        String result = null;
-        if(uri.getScheme().equals("content")){
-            Cursor cursor = getContentResolver().query(uri, null,null,null,null);
-            try {
-                if (cursor != null && cursor.moveToFirst()) {
-                    result = cursor.getString(cursor.getColumnIndex(OpenableColumns.DISPLAY_NAME));
-                }
-            }
-            finally {
-                cursor.close();
-            }
-        }
-        if(result == null){
-            result = uri.getPath();
-            int cut = result.lastIndexOf('/');
-            if(cut != -1){
-                result = result.substring(cut +1);
-            }
-        }
-        return  result;
-    }
-
-    public  void  uploadFileTofirebase (View v ){
+    public  void  uploadFileToFirebase (View v ){
         if(!edID.getText().toString().isEmpty() && edID.getText().toString().matches("\\d+")){
             if(mUploadsTask != null && mUploadsTask.isInProgress()){
                 Toast.makeText(this, "Song uploads in allready progress!", Toast.LENGTH_SHORT).show();
@@ -168,7 +135,6 @@ public class ServerActivity extends AppCompatActivity {
                     storageReference.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
                         @Override
                         public void onSuccess(Uri uri) {
-
 //                            String ID = referenceSongs.push().getKey();
 
                             id = Long.parseLong(edID.getText().toString());
@@ -176,7 +142,6 @@ public class ServerActivity extends AppCompatActivity {
                             MusicFile uploadSong = new MusicFile(uri.toString(),title,artist,album,duration,id);
                             referenceSongs.child(String.valueOf(id)).setValue(uploadSong);
                             Toast.makeText(ServerActivity.this, "Uploaded !!!", Toast.LENGTH_SHORT).show();
-
 
                         }
                     });
@@ -190,9 +155,8 @@ public class ServerActivity extends AppCompatActivity {
             });
 
         }else {
-            Toast.makeText(this, "No file Selected to uploads", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "No file selected to uploads", Toast.LENGTH_SHORT).show();
         }
-
 
     }
 
@@ -200,7 +164,6 @@ public class ServerActivity extends AppCompatActivity {
     private String getFileExtension(Uri uri) {
         ContentResolver contentResolver = getContentResolver();
         MimeTypeMap mime = MimeTypeMap.getSingleton();
-
         return mime.getExtensionFromMimeType(contentResolver.getType(uri));
     }
 }
